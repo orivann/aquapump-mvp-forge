@@ -1,22 +1,15 @@
 version: '3.8'
 
-# Define the services (containers) for the application
 services:
-  # The main application service
   app:
-    # Build the Docker image using the Dockerfile in the current directory
     build:
       context: .
       dockerfile: Dockerfile
-    # Name the container for easier identification
-    container_name: vite_react_shadcn_ts
-    # Map port 8080 on the host to port 8080 in the container
+    container_name: AquaPump
     ports:
       - "8080:8080"
-    # Restart the container automatically unless it is explicitly stopped
     restart: unless-stopped
 
-# Define the networks for the services
 networks:
   default:
     driver: bridge
