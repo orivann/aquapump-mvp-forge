@@ -2,22 +2,38 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: AquaPump
+      dockerfile: Dockerfile.dev
     ports:
-      - "8080:8080"
+      - "5173:5173"
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
     volumes:
-      - ./logs:/var/log/nginx 
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    networks:
+      - aquapump-net
+
+  server:
+    build: ./server
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    networks:
+      - aquapump-net
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
     networks:
       - aquapump-net
 
 networks:
   aquapump-net:
     driver: bridge
-
