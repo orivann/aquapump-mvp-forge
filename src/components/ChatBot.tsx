@@ -15,11 +15,10 @@ interface Message {
 }
 
 interface ChatBotProps {
-  apiKey?: string;
-  aiService?: 'openai' | 'claude' | 'perplexity';
+  aiService?: 'openai' | 'claude' | 'perplexity' | 'grok';
 }
 
-const ChatBot = ({ apiKey, aiService = 'openai' }: ChatBotProps) => {
+const ChatBot = ({ aiService = 'openai' }: ChatBotProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -31,8 +30,6 @@ const ChatBot = ({ apiKey, aiService = 'openai' }: ChatBotProps) => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [tempApiKey, setTempApiKey] = useState('');
-  const [showApiKeyInput, setShowApiKeyInput] = useState(!apiKey);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -42,117 +39,25 @@ const ChatBot = ({ apiKey, aiService = 'openai' }: ChatBotProps) => {
     }
   }, [messages]);
 
-  const getSystemPrompt = () => `You are an AI assistant for AquaPump Industries, a leading provider of industrial pumping solutions with over 25 years of experience.
-
-COMPANY CONTEXT:
-- We specialize in centrifugal pumps, submersible pumps, and custom solutions
-- We serve manufacturing, oil & gas, water treatment, mining, agriculture, and construction industries
-- We offer installation, maintenance, repair, and 24/7 emergency services
-- Based in Dallas, TX with offices in Houston and Oklahoma City
-
-YOUR ROLE:
-- Help customers select the right pump for their applications
-- Provide technical specifications and performance data
-- Assist with quote requests and service scheduling
-- Offer maintenance and troubleshooting advice
-- Be professional, knowledgeable, and solution-focused
-
-AVAILABLE PRODUCTS:
-1. Centrifugal Pumps (AquaCent series): 150-1000 GPM, $2,450-$8,950
-2. Submersible Pumps (AquaSub series): 200-800 GPM, $3,250-$9,850
-3. Custom Solutions: Engineered for specific requirements
-
-SERVICES:
-- Installation & Setup: $850+, 2-5 business days
-- Maintenance Plans: $299-$999/month
-- 24/7 Emergency Service: 2-4 hour response
-- Custom Engineering: 2-8 weeks
-
-Always ask relevant questions to understand customer needs and recommend appropriate solutions. Encourage users to contact our team for detailed quotes and technical consultations.`;
-
   const callAI = async (userMessage: string): Promise<string> => {
-    const currentApiKey = apiKey || tempApiKey;
-    
-    if (!currentApiKey) {
-      throw new Error('API key is required');
+    const response = await fetch('http://localhost:3001/api/ai', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: userMessage,
+            aiService: aiService,
+        }),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `API error: ${response.statusText}`);
     }
 
-    const messages = [
-      { role: 'system', content: getSystemPrompt() },
-      { role: 'user', content: userMessage }
-    ];
-
-    switch (aiService) {
-      case 'openai':
-        const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${currentApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'gpt-5-2025-08-07',
-            messages,
-            temperature: 0.7,
-            max_tokens: 500,
-          }),
-        });
-
-        if (!openaiResponse.ok) {
-          throw new Error(`OpenAI API error: ${openaiResponse.statusText}`);
-        }
-
-        const openaiData = await openaiResponse.json();
-        return openaiData.choices[0].message.content;
-
-      case 'claude':
-        const claudeResponse = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${currentApiKey}`,
-            'Content-Type': 'application/json',
-            'anthropic-version': '2023-06-01',
-          },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
-            messages: [{ role: 'user', content: userMessage }],
-            system: getSystemPrompt(),
-            max_tokens: 500,
-          }),
-        });
-
-        if (!claudeResponse.ok) {
-          throw new Error(`Claude API error: ${claudeResponse.statusText}`);
-        }
-
-        const claudeData = await claudeResponse.json();
-        return claudeData.content[0].text;
-
-      case 'perplexity':
-        const perplexityResponse = await fetch('https://api.perplexity.ai/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${currentApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'llama-3.1-sonar-large-128k-online',
-            messages,
-            temperature: 0.7,
-            max_tokens: 500,
-          }),
-        });
-
-        if (!perplexityResponse.ok) {
-          throw new Error(`Perplexity API error: ${perplexityResponse.statusText}`);
-        }
-
-        const perplexityData = await perplexityResponse.json();
-        return perplexityData.choices[0].message.content;
-
-      default:
-        throw new Error('Unsupported AI service');
-    }
+    const data = await response.json();
+    return data.response;
   };
 
   const handleSend = async () => {
@@ -208,16 +113,6 @@ Always ask relevant questions to understand customer needs and recommend appropr
     }
   };
 
-  const saveApiKey = () => {
-    if (tempApiKey.trim()) {
-      setShowApiKeyInput(false);
-      toast({
-        title: "API Key Saved",
-        description: "You can now start chatting with the AI assistant.",
-      });
-    }
-  };
-
   return (
     <>
       {/* Chat Toggle Button */}
@@ -258,27 +153,6 @@ Always ask relevant questions to understand customer needs and recommend appropr
           </CardHeader>
 
           <CardContent className="flex-1 flex flex-col p-0">
-            {/* API Key Input */}
-            {showApiKeyInput && (
-              <div className="p-4 bg-industrial-blue-light border-b">
-                <p className="text-sm text-industrial-grey mb-2">
-                  Enter your {aiService.toUpperCase()} API key to start chatting:
-                </p>
-                <div className="flex space-x-2">
-                  <Input
-                    type="password"
-                    placeholder={`${aiService.toUpperCase()} API Key`}
-                    value={tempApiKey}
-                    onChange={(e) => setTempApiKey(e.target.value)}
-                    className="flex-1"
-                  />
-                  <Button onClick={saveApiKey} size="sm" variant="industrial">
-                    Save
-                  </Button>
-                </div>
-              </div>
-            )}
-
             {/* Messages */}
             <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
               <div className="space-y-4">
@@ -326,31 +200,29 @@ Always ask relevant questions to understand customer needs and recommend appropr
             </ScrollArea>
 
             {/* Input */}
-            {!showApiKeyInput && (
-              <div className="p-4 border-t border-border">
-                <div className="flex space-x-2">
-                  <Input
-                    placeholder="Ask about pumps, specs, or get a quote..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    disabled={isLoading}
-                    className="flex-1"
-                  />
-                  <Button
-                    onClick={handleSend}
-                    disabled={isLoading || !input.trim()}
-                    variant="industrial"
-                    size="icon"
-                  >
-                    <Send className="w-4 h-4" />
-                  </Button>
-                </div>
-                <p className="text-xs text-industrial-grey mt-2">
-                  Powered by {aiService.toUpperCase()} • For urgent issues call +1 (555) 123-4567
-                </p>
+            <div className="p-4 border-t border-border">
+              <div className="flex space-x-2">
+                <Input
+                  placeholder="Ask about pumps, specs, or get a quote..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  disabled={isLoading}
+                  className="flex-1"
+                />
+                <Button
+                  onClick={handleSend}
+                  disabled={isLoading || !input.trim()}
+                  variant="industrial"
+                  size="icon"
+                >
+                  <Send className="w-4 h-4" />
+                </Button>
               </div>
-            )}
+              <p className="text-xs text-industrial-grey mt-2">
+                Powered by {aiService.toUpperCase()} • For urgent issues call +1 (555) 123-4567
+              </p>
+            </div>
           </CardContent>
         </Card>
       )}

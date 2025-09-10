@@ -4,85 +4,39 @@
 
 **URL**: https://lovable.dev/projects/a5e7fae8-3356-4c31-a5c7-135bb2f13406
 
-## How can I edit this code?
+## What is this project?
 
-There are several ways of editing your application.
+This project is a web application for AquaPump Industries, a fictional company that sells industrial pumps. The application includes a home page with product information and an AI-powered chatbot to assist users.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/a5e7fae8-3356-4c31-a5c7-135bb2f13406) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies Used
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Frontend**:
+  - Vite
+  - TypeScript
+  - React
+  - shadcn-ui
+  - Tailwind CSS
+- **Backend**:
+  - Node.js
+  - Express
+  - TypeScript
+- **Database**:
+  - Redis (for caching)
+- **Containerization**:
+  - Docker
+  - Docker Compose
 
-## How can I deploy this project?
+## Getting Started
 
-Simply open [Lovable](https://lovable.dev/projects/a5e7fae8-3356-4c31-a5c7-135bb2f13406) and click on Share -> Publish.
+### Prerequisites
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
-
----
-
-## Running with Docker
-
-This project is fully containerized and can be run using Docker and Docker Compose. This is the recommended way to run the application for development.
-
-**Prerequisites:**
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js & npm](https://github.com/nvm-sh/nvm#installing-and-updating) (for local development without Docker)
 
-**Instructions:**
+### Running with Docker (Recommended)
 
 1.  **Clone the repository:**
     ```sh
@@ -90,17 +44,63 @@ This project is fully containerized and can be run using Docker and Docker Compo
     cd <YOUR_PROJECT_NAME>
     ```
 
-2.  **Build and run the application:**
+2.  **Create an environment file:**
+    Create a `.env` file in the root of the project by copying the example file:
+    ```sh
+    cp .env.example .env
+    ```
+    Update the `.env` file with your API keys for the AI services you want to use.
+
+3.  **Build and run the application:**
     ```sh
     docker-compose up --build
     ```
-    This command will build the Docker image for the first time and start the application container. The `--build` flag is only necessary the first time or when you make changes to the `Dockerfile`.
+    This command will build the Docker images for the frontend and backend services and start the containers.
 
-3.  **Access the application:**
-    Once the container is running, you can access the application in your web browser at [http://localhost:8080](http://localhost:8080).
+4.  **Access the application:**
+    - Frontend: [http://localhost:8080](http://localhost:8080)
+    - Backend: [http://localhost:3001](http://localhost:3001)
 
-4.  **Stopping the application:**
-    To stop the application, press `Ctrl+C` in the terminal where `docker-compose` is running, and then run:
+### Running Locally (without Docker)
+
+#### Backend
+
+1.  Navigate to the `server` directory:
     ```sh
-    docker-compose down
+    cd server
     ```
+2.  Install dependencies:
+    ```sh
+    npm install
+    ```
+3.  Create a `.env` file in the `server` directory and add your API keys.
+4.  Start the server:
+    ```sh
+    npm start
+    ```
+
+#### Frontend
+
+1.  In a new terminal, navigate to the root of the project:
+    ```sh
+    cd <YOUR_PROJECT_NAME>
+    ```
+2.  Install dependencies:
+    ```sh
+    npm install
+    ```
+3.  Start the development server:
+    ```sh
+    npm run dev
+    ```
+
+## AI Chatbot
+
+The application includes an AI-powered chatbot that can assist users with product recommendations, technical specifications, and more. The chatbot can be configured to use one of the following AI services:
+
+- OpenAI
+- Claude
+- Perplexity
+- Grok
+
+The `aiService` is set in the `ChatBot.tsx` component. By default, it is set to `openai`.
