@@ -14,11 +14,7 @@ interface Message {
   timestamp: Date;
 }
 
-interface ChatBotProps {
-  aiService?: 'openai' | 'claude' | 'perplexity' | 'grok';
-}
-
-const ChatBot = ({ aiService = 'openai' }: ChatBotProps) => {
+const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -47,7 +43,6 @@ const ChatBot = ({ aiService = 'openai' }: ChatBotProps) => {
         },
         body: JSON.stringify({
             message: userMessage,
-            aiService: aiService,
         }),
     });
 
@@ -220,7 +215,7 @@ const ChatBot = ({ aiService = 'openai' }: ChatBotProps) => {
                 </Button>
               </div>
               <p className="text-xs text-industrial-grey mt-2">
-                Powered by {aiService.toUpperCase()} • For urgent issues call +1 (555) 123-4567
+                For urgent issues call +1 (555) 123-4567
               </p>
             </div>
           </CardContent>

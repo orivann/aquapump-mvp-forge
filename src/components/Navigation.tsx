@@ -2,19 +2,22 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail } from "lucide-react";
+import { useTranslation } from 'react-i18next';
+import ReactCountryFlag from "react-country-flag";
 
 const Navigation = () => {
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/products", label: "Products" },
-    { href: "/services", label: "Services" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: t('nav.home') },
+    { href: "/products", label: t('nav.products') },
+    { href: "/services", label: t('nav.services') },
+    { href: "/about", label: t('nav.about') },
+    { href: "/contact", label: t('nav.contact') },
   ];
 
   return (
@@ -44,14 +47,20 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop CTA */}
+          {/* Desktop CTA & Language Switcher */}
           <div className="hidden md:flex items-center space-x-4">
+            <Button variant="ghost" size="icon" onClick={() => i18n.changeLanguage('en')}>
+              <ReactCountryFlag countryCode="US" svg />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => i18n.changeLanguage('he')}>
+              <ReactCountryFlag countryCode="IL" svg />
+            </Button>
             <div className="flex items-center text-sm text-industrial-grey">
               <Phone className="w-4 h-4 mr-1" />
               <span>+1 (555) 123-4567</span>
             </div>
             <Button variant="industrial" size="sm" asChild>
-              <Link to="/contact">Get Quote</Link>
+              <Link to="/contact">{t('nav.get_quote')}</Link>
             </Button>
           </div>
 
@@ -84,12 +93,20 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="px-3 py-2 space-y-2">
-                <div className="flex items-center text-sm text-industrial-grey">
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => {i18n.changeLanguage('en'); setIsOpen(false);}}>
+                    <ReactCountryFlag countryCode="US" svg />
+                  </Button>
+                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => {i18n.changeLanguage('he'); setIsOpen(false);}}>
+                    <ReactCountryFlag countryCode="IL" svg />
+                  </Button>
+                </div>
+                <div className="flex items-center text-sm text-industrial-grey pt-2">
                   <Phone className="w-4 h-4 mr-2" />
                   <span>+1 (555) 123-4567</span>
                 </div>
                 <Button variant="industrial" size="sm" className="w-full" asChild>
-                  <Link to="/contact">Get Quote</Link>
+                  <Link to="/contact">{t('nav.get_quote')}</Link>
                 </Button>
               </div>
             </div>
