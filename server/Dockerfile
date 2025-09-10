@@ -8,10 +8,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build
+EXPOSE 8080
 
-RUN ls -l /app/dist
+CMD ["npm", "run", "dev"]
 
-EXPOSE 3001
-
-CMD ["npm", "run", "serve"]

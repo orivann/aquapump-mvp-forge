@@ -61,6 +61,41 @@ This project is built with:
     - Frontend: [http://localhost:8080](http://localhost:8080)
     - Backend: [http://localhost:3001](http://localhost:3001)
 
+### Conflict resolution / ports
+
+The repository had a merge conflict between branches that used different frontend ports and Dockerfiles. This has been resolved as follows so you can merge and close the PR:
+
+- Frontend: host port 8080 (mapped to container port 8080)
+- Frontend dev image: `Dockerfile.dev` (used by `docker-compose.yml` for the `app` service)
+- Frontend production image: `Dockerfile` (builds static files and serves them with nginx)
+- Backend: host port 3001 (mapped to container port 3001) — unchanged
+
+If you prefer the frontend dev server to use Vite's default port 5173 instead of 8080, tell me and I will update `vite.config.ts`, `Dockerfile.dev`, and `docker-compose.yml` to match.
+
+### Environment and best practices
+
+This repository uses an `.env` file to make ports and the frontend Dockerfile configurable. This avoids hard-coded ports and makes merging branches easier.
+
+1. Copy the example file:
+```sh
+cp .env.example .env
+```
+
+2. Edit `.env` only when needed. Defaults are:
+- `FRONTEND_HOST_PORT=8080`
+- `FRONTEND_INTERNAL_PORT=8080`
+- `APP_DOCKERFILE=Dockerfile.dev`
+- `BACKEND_HOST_PORT=3001`
+
+3. Run compose:
+```sh
+docker-compose up --build
+```
+
+Notes:
+- Use `Dockerfile` (production) vs `Dockerfile.dev` (dev) by changing `APP_DOCKERFILE` in `.env`.
+- Keep API URLs in the frontend code configurable via environment or runtime config if you need to point to different backend hosts.
+
 ### Running Locally (without Docker)
 
 #### Backend
