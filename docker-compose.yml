@@ -1,10 +1,14 @@
+env_file: .env
+
 services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.dev}
     ports:
-      - "5173:5173"
+      - "${FRONTEND_HOST_PORT:-8080}:${FRONTEND_INTERNAL_PORT:-8080}"
+    environment:
+      - PORT=${FRONTEND_INTERNAL_PORT:-8080}
     restart: unless-stopped
     volumes:
       - .:/app
