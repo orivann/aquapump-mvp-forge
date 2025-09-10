@@ -10,6 +10,12 @@ import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import AdminPanel from "./components/AdminPanel";
+import LoginPage from "./pages/LoginPage";
+import { Amplify } from 'aws-amplify';
+import awsmobile from './aws-exports';
+
+Amplify.configure(awsmobile);
 
 const queryClient = new QueryClient();
 
@@ -26,6 +32,8 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin" element={<AdminPanel />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

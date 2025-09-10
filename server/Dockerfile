@@ -8,6 +8,8 @@ RUN npm ci
 
 COPY . .
 
-EXPOSE 5173
+RUN npm run build
 
-CMD ["npm", "run", "dev"]
+EXPOSE 3001
+
+CMD ["npm", "run", "serve"]

@@ -8,9 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Shield, Save, Eye, MessageSquare, BarChart3, Users } from "lucide-react";
+import { Shield, Save, Eye, MessageSquare, BarChart3, Users, LogOut } from "lucide-react";
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
-const AdminPanel = () => {
+const AdminPanel = ({ signOut, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'chat' | 'analytics'>('overview');
   const [systemPrompt, setSystemPrompt] = useState('');
@@ -56,9 +58,15 @@ const AdminPanel = () => {
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center">
-            <Shield className="w-5 h-5 mr-2 text-industrial-blue" />
-            AquaPump AI Admin Panel
+          <DialogTitle className="flex items-center justify-between">
+            <div className="flex items-center">
+                <Shield className="w-5 h-5 mr-2 text-industrial-blue" />
+                AquaPump AI Admin Panel
+            </div>
+            <Button onClick={signOut} variant="ghost" size="sm">
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+            </Button>
           </DialogTitle>
         </DialogHeader>
 
@@ -97,6 +105,7 @@ const AdminPanel = () => {
         <div className="mt-6">
           {activeTab === 'overview' && (
             <div className="space-y-6">
+                <p>Welcome, {user.username}!</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Card className="border-0 shadow-card">
                   <CardContent className="p-4 text-center">
@@ -266,4 +275,4 @@ const AdminPanel = () => {
   );
 };
 
-export default AdminPanel;
+export default withAuthenticator(AdminPanel);
