@@ -71,3 +71,36 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+---
+
+## Running with Docker
+
+This project is fully containerized and can be run using Docker and Docker Compose. This is the recommended way to run the application for development.
+
+**Prerequisites:**
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+**Instructions:**
+
+1.  **Clone the repository:**
+    ```sh
+    git clone <YOUR_GIT_URL>
+    cd <YOUR_PROJECT_NAME>
+    ```
+
+2.  **Build and run the application:**
+    ```sh
+    docker-compose up --build
+    ```
+    This command will build the Docker image for the first time and start the application container. The `--build` flag is only necessary the first time or when you make changes to the `Dockerfile`.
+
+3.  **Access the application:**
+    Once the container is running, you can access the application in your web browser at [http://localhost:8080](http://localhost:8080).
+
+4.  **Stopping the application:**
+    To stop the application, press `Ctrl+C` in the terminal where `docker-compose` is running, and then run:
+    ```sh
+    docker-compose down
+    ```

@@ -1,0 +1,58 @@
+# This is a GitHub Actions workflow to build a Docker image and push it to Amazon ECR.
+name: CI - Build and Push Docker Image to ECR
+
+#
+# 🚨 IMPORTANT:
+# To use this workflow, you must create the following secrets in your GitHub repository's settings:
+# 1. AWS_ACCESS_KEY_ID: Your AWS access key ID.
+# 2. AWS_SECRET_ACCESS_KEY: Your AWS secret access key.
+#
+# You must also create an ECR repository in your AWS account and update the ECR_REPOSITORY environment variable below.
+#
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+
+    # Environment variables used in the workflow
+    env:
+      AWS_REGION: us-east-1                # <-- TODO: Change this to your AWS region
+      ECR_REPOSITORY: vite_react_shadcn_ts # <-- TODO: Change this to your ECR repository name
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}
+          tags: |
+            type=sha,prefix=,format=short
+            latest
+
+      - name: Build and push Docker image to ECR
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }} # Only push on merge to main, not on PRs
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
