@@ -10,9 +10,14 @@ import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
 import AdminPanel from "./components/AdminPanel";
 import ProtectedRoute from "./components/ProtectedRoute";
+import LoginPage from "./pages/LoginPage";
+
+import { Amplify } from "aws-amplify";
+import awsmobile from "./aws-exports";
+
+Amplify.configure(awsmobile);
 
 const queryClient = new QueryClient();
 
@@ -23,15 +28,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminPanel />
-              </ProtectedRoute>
-            }
-          />
+          {/* Public routes with main layout */}
           <Route
             path="/*"
             element={
@@ -45,6 +42,17 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>
+            }
+          />
+
+          {/* Auth-related routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminPanel />
+              </ProtectedRoute>
             }
           />
         </Routes>
