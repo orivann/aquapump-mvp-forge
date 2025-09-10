@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Zap, Shield, Cpu } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-gray-50/90">
       {/* Hero Section */}
@@ -10,10 +14,10 @@ const Home = () => {
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="container mx-auto px-4 text-center relative">
           <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-            AquaPump Industries
+            {t('hero.title')}
           </h1>
           <p className="text-xl text-blue-200 mb-8 max-w-3xl mx-auto">
-            Leading provider of industrial pumping solutions with over 25 years of experience. We engineer reliability for your most demanding applications.
+            {t('hero.subtitle')}
           </p>
           <Button size="lg" variant="industrial" className="text-lg">
             Request a Quote
@@ -99,11 +103,11 @@ const Home = () => {
             Our experts are here to help you select the right solution and provide a detailed quote.
           </p>
           <div className="flex justify-center space-x-4">
-            <Button size="lg" variant="industrial">
-              Get a Free Consultation
+            <Button size="lg" variant="industrial" asChild>
+              <Link to="/contact">Get a Free Consultation</Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-industrial-dark">
-              Explore Our Products
+            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-industrial-dark" asChild>
+              <Link to="/products">Explore Our Products</Link>
             </Button>
           </div>
         </div>

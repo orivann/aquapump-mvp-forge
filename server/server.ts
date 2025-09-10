@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import axios from 'axios';
 import { createClient } from 'redis';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -18,13 +20,98 @@ redisClient.on('error', (err) => console.log('Redis Client Error', err));
 app.use(cors());
 app.use(express.json());
 
-const getSystemPrompt = () => `You are an AI assistant for AquaPump Industries, a leading provider of industrial pumping solutions with over 25 years of experience.
+// Middleware to protect routes
+const authMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ message: 'Authentication failed: No token provided' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_default_secret');
+        (req as any).user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Authentication failed: Invalid token' });
+    }
+};
+
+
+app.post('/api/auth/login', (req, res) => {
+    const { username, password } = req.body;
+
+    const adminUser = process.env.ADMIN_USER || 'admin';
+    const adminPasswordHash = process.env.ADMIN_PASSWORD || '$2a$10$vI8aWBz21.2V7s4hA5G45uLp2f.F9A7z0z2a.q2a7z0z2a.q2a7z0'; // Default hash for "password"
+
+    const isPasswordValid = bcrypt.compareSync(password, adminPasswordHash);
+
+    if (username === adminUser && isPasswordValid) {
+        const token = jwt.sign(
+            { username: adminUser, role: 'admin' },
+            process.env.JWT_SECRET || 'your_default_secret',
+            { expiresIn: '1h' }
+        );
+        res.json({ token });
+    } else {
+        res.status(401).json({ message: 'Invalid credentials' });
+    }
+});
+
+app.get('/api/admin/metrics', authMiddleware, async (req, res) => {
+    try {
+        const info = await redisClient.info();
+        const allKeys = await redisClient.keys('*');
+        const keyspace = await redisClient.info('keyspace');
+        const db0 = keyspace.split('\\r\\n').find(line => line.startsWith('db0'));
+        const keyspaceHits = await redisClient.info('stats').then(info => info.match(/keyspace_hits:(\d+)/)?.[1]);
+        const keyspaceMisses = await redisClient.info('stats').then(info => info.match(/keyspace_misses:(\d+)/)?.[1]);
+
+        const metrics = {
+            redis_version: info.match(/redis_version:([\d.]+)/)?.[1],
+            uptime_in_days: info.match(/uptime_in_days:(\d+)/)?.[1],
+            connected_clients: info.match(/connected_clients:(\d+)/)?.[1],
+            used_memory_human: info.match(/used_memory_human:([\d.]+[KMGTPEZY])/)?.[1],
+            total_keys: allKeys.length,
+            keyspace_hits: keyspaceHits ? parseInt(keyspaceHits, 10) : 0,
+            keyspace_misses: keyspaceMisses ? parseInt(keyspaceMisses, 10) : 0,
+        };
+        res.json(metrics);
+    } catch (error) {
+        console.error('Error fetching Redis metrics:', error);
+        res.status(500).json({ message: 'Failed to fetch Redis metrics' });
+    }
+});
+
+// In-memory store for AI configuration
+let currentAiConfig = {
+    service: 'openai',
+    model: 'gpt-5-2025-08-07',
+};
+
+app.get('/api/admin/ai-config', authMiddleware, (req, res) => {
+    res.json(currentAiConfig);
+});
+
+app.post('/api/admin/ai-config', authMiddleware, (req, res) => {
+    const { service, model } = req.body;
+    if (service && model) {
+        currentAiConfig = { service, model };
+        res.json({ message: 'AI configuration updated successfully', config: currentAiConfig });
+    } else {
+        res.status(400).json({ message: 'Invalid configuration data' });
+    }
+});
+
+
+const getSystemPrompt = () => `You are an AI assistant for AquaPump Industries, a new provider of industrial pumping solutions.
 
 COMPANY CONTEXT:
-- We specialize in centrifugal pumps, submersible pumps, and custom solutions
-- We serve manufacturing, oil & gas, water treatment, mining, agriculture, and construction industries
-- We offer installation, maintenance, repair, and 24/7 emergency services
-- Based in Dallas, TX with offices in Houston and Oklahoma City
+- We are a subsidiary of AQUATECH (www.aquatech.co.il), a leader in water treatment solutions.
+- We specialize in centrifugal pumps, submersible pumps, and custom solutions for various industries.
+- We serve manufacturing, oil & gas, water treatment, mining, agriculture, and construction industries.
+- We offer installation, maintenance, and repair services.
+- Our headquarters are in Dallas, TX, with regional offices in Houston and Oklahoma City.
 
 YOUR ROLE:
 - Help customers select the right pump for their applications
@@ -47,13 +134,14 @@ SERVICES:
 Always ask relevant questions to understand customer needs and recommend appropriate solutions. Encourage users to contact our team for detailed quotes and technical consultations.`;
 
 app.post('/api/ai', async (req, res) => {
-    const { message, aiService } = req.body;
+    const { message } = req.body;
+    const { service: aiService, model } = currentAiConfig;
 
-    if (!message || !aiService) {
-        return res.status(400).json({ error: 'Message and aiService are required' });
+    if (!message) {
+        return res.status(400).json({ error: 'Message is required' });
     }
 
-    const cacheKey = `${aiService}:${message}`;
+    const cacheKey = `${aiService}:${model}:${message}`;
 
     try {
         const cachedResponse = await redisClient.get(cacheKey);

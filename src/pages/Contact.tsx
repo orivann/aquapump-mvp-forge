@@ -67,19 +67,19 @@ const Contact = () => {
       city: "Dallas (Headquarters)",
       address: "123 Industrial Blvd, Dallas, TX 75201",
       phone: "+1 (555) 123-4567",
-      manager: "Mike Thompson"
+      manager: "Branch Manager"
     },
     {
       city: "Houston",
       address: "456 Pump Street, Houston, TX 77001", 
       phone: "+1 (555) 234-5678",
-      manager: "Sarah Chen"
+      manager: "Branch Manager"
     },
     {
       city: "Oklahoma City",
       address: "789 Service Ave, Oklahoma City, OK 73101",
       phone: "+1 (555) 345-6789", 
-      manager: "Lisa Rodriguez"
+      manager: "Branch Manager"
     }
   ];
 
