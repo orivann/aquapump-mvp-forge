@@ -1,10 +1,10 @@
 version: "3.9"
 
 services:
-  app:
+  frontend:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: infra/frontend.Dockerfile
       target: dev
       args:
         UID: 1001
@@ -13,18 +13,18 @@ services:
       - "${FRONTEND_DEV_PORT:-8081}:8080"
     restart: unless-stopped
     volumes:
-      - .:/app
+      - ../frontend:/app
       - /app/node_modules
       - vite-cache:/app/node_modules/.vite
     depends_on:
-      - server
+      - backend
     networks:
       - aquapump-net
 
-  app-prod:
+  frontend-prod:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: infra/frontend.Dockerfile
       target: prod
     ports:
       - "${FRONTEND_PROD_PORT:-8080}:8080"
@@ -32,23 +32,35 @@ services:
     networks:
       - aquapump-net
 
-  server:
-    build: ./server
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/backend.Dockerfile
+      target: dev
     ports:
       - "3001:3001"
     restart: unless-stopped
     env_file:
-      - .env
+      - ../.env
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
     depends_on:
-      - redis
+      - postgres
     networks:
       - aquapump-net
 
-  redis:
-    image: "redis:alpine"
+  postgres:
+    image: "postgres:alpine"
     ports:
-      - "6379:6379"
+      - "5432:5432"
     restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - aquapump-net
 
@@ -58,4 +70,4 @@ networks:
 
 volumes:
   vite-cache:
-
+  postgres-data:

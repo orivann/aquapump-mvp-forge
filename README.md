@@ -1,42 +1,40 @@
-# Welcome to your Lovable project
+# AquaPump Industries Web Application
 
-## Project info
+This project is a web application for AquaPump Industries, a fictional company that sells industrial pumps. The application includes a home page with product information, an AI-powered chatbot, and optional user authentication with AWS Cognito.
 
-**URL**: https://lovable.dev/projects/a5e7fae8-3356-4c31-a5c7-135bb2f13406
+## Project Structure
 
-## What is this project?
+The project is organized into three main directories:
 
-This project is a web application for AquaPump Industries, a fictional company that sells industrial pumps. The application includes a home page with product information and an AI-powered chatbot to assist users.
+-   `frontend/`: Contains the React frontend application.
+-   `backend/`: Contains the Node.js/Express backend application.
+-   `infra/`: Contains the Docker and CI/CD configuration.
 
 ## Technologies Used
 
-This project is built with:
+-   **Frontend**:
+    -   React, Vite, TypeScript
+    -   shadcn-ui, Tailwind CSS
+    -   i18next for internationalization (English & Hebrew)
+-   **Backend**:
+    -   Node.js, Express, TypeScript
+-   **Database**:
+    -   PostgreSQL
+-   **Authentication**:
+    -   AWS Cognito
+-   **Containerization**:
+    -   Docker, Docker Compose
 
-- **Frontend**:
-  - Vite
-  - TypeScript
-  - React
-  - shadcn-ui
-  - Tailwind CSS
-- **Backend**:
-  - Node.js
-  - Express
-  - TypeScript
-- **Database**:
-  - Redis (for caching)
-- **Containerization**:
-  - Docker
-  - Docker Compose
+## Getting Started (Docker-First)
 
-## Getting Started
+This project is designed to be run with Docker. No local installation of Node.js or other dependencies is required.
 
 ### Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
-- [Node.js & npm](https://github.com/nvm-sh/nvm#installing-and-updating) (for local development without Docker)
+-   [Docker](https://docs.docker.com/get-docker/)
+-   [Docker Compose](https://docs.docker.com/compose/install/)
 
-### Running with Docker (Recommended)
+### Running the Application
 
 1.  **Clone the repository:**
     ```sh
@@ -49,93 +47,32 @@ This project is built with:
     ```sh
     cp .env.example .env
     ```
-    Update the `.env` file with your API keys for the AI services you want to use.
+    Update the `.env` file with your AWS Cognito credentials and any API keys for the AI services you want to use.
 
 3.  **Build and run the application:**
     ```sh
-    docker-compose up --build
+    docker-compose -f infra/docker-compose.yml up --build
     ```
     This command will build the Docker images for the frontend and backend services and start the containers.
 
 4.  **Access the application:**
-    - Frontend: [http://localhost:8080](http://localhost:8080)
-    - Backend: [http://localhost:3001](http://localhost:3001)
+    -   Frontend: [http://localhost:8081](http://localhost:8081)
+    -   Backend: [http://localhost:3001](http://localhost:3001)
 
-### Conflict resolution / ports
+## AWS Cognito Setup
 
-The repository had a merge conflict between branches that used different frontend ports and Dockerfiles. This has been resolved as follows so you can merge and close the PR:
+The frontend is configured to use AWS Cognito for authentication. The configuration is done via environment variables. You need to set the following variables in your `.env` file:
 
-- Frontend: host port 8080 (mapped to container port 8080)
-- Frontend dev image: `Dockerfile.dev` (used by `docker-compose.yml` for the `app` service)
-- Frontend production image: `Dockerfile` (builds static files and serves them with nginx)
-- Backend: host port 3001 (mapped to container port 3001) — unchanged
+-   `VITE_AWS_REGION`: The AWS region where your Cognito User Pool is located (e.g., `us-east-1`).
+-   `VITE_COGNITO_USER_POOL_ID`: The ID of your Cognito User Pool.
+-   `VITE_COGNITO_CLIENT_ID`: The ID of your Cognito User Pool client.
 
-If you prefer the frontend dev server to use Vite's default port 5173 instead of 8080, tell me and I will update `vite.config.ts`, `Dockerfile.dev`, and `docker-compose.yml` to match.
+The backend validates the JWTs from Cognito. No additional configuration is needed on the backend for authentication to work.
 
-### Environment and best practices
+## CI/CD
 
-This repository uses an `.env` file to make ports and the frontend Dockerfile configurable. This avoids hard-coded ports and makes merging branches easier.
-
-1. Copy the example file:
-```sh
-cp .env.example .env
-```
-
-2. Edit `.env` only when needed. Defaults are:
-- `FRONTEND_HOST_PORT=8080`
-- `FRONTEND_INTERNAL_PORT=8080`
-- `APP_DOCKERFILE=Dockerfile.dev`
-- `BACKEND_HOST_PORT=3001`
-
-3. Run compose:
-```sh
-docker-compose up --build
-```
-
-Notes:
-- Use `Dockerfile` (production) vs `Dockerfile.dev` (dev) by changing `APP_DOCKERFILE` in `.env`.
-- Keep API URLs in the frontend code configurable via environment or runtime config if you need to point to different backend hosts.
-
-### Running Locally (without Docker)
-
-#### Backend
-
-1.  Navigate to the `server` directory:
-    ```sh
-    cd server
-    ```
-2.  Install dependencies:
-    ```sh
-    npm install
-    ```
-3.  Create a `.env` file in the `server` directory and add your API keys.
-4.  Start the server:
-    ```sh
-    npm start
-    ```
-
-#### Frontend
-
-1.  In a new terminal, navigate to the root of the project:
-    ```sh
-    cd <YOUR_PROJECT_NAME>
-    ```
-2.  Install dependencies:
-    ```sh
-    npm install
-    ```
-3.  Start the development server:
-    ```sh
-    npm run dev
-    ```
+The project includes a GitHub Actions workflow that builds, lints, and tests the frontend and backend on every push and pull request. On merge to the `main` branch, it also builds and pushes the production Docker images to Amazon ECR.
 
 ## AI Chatbot
 
-The application includes an AI-powered chatbot that can assist users with product recommendations, technical specifications, and more. The chatbot can be configured to use one of the following AI services:
-
-- OpenAI
-- Claude
-- Perplexity
-- Grok
-
-The `aiService` is set in the `ChatBot.tsx` component. By default, it is set to `openai`.
+The application includes an AI-powered chatbot that can be configured from the admin panel. The admin panel is accessible to authenticated users who are part of the `admin` group in Cognito.
