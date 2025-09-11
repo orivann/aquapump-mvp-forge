@@ -3,15 +3,17 @@ services:
     build:
       context: .
       dockerfile: ${APP_DOCKERFILE:-Dockerfile.dev}
+      args:
+        UID: 1001
+        GID: 1001
     ports:
-      - "${FRONTEND_HOST_PORT:-8080}:${FRONTEND_INTERNAL_PORT:-5173}"
-    environment:
-      - PORT=${FRONTEND_INTERNAL_PORT:-5173}
-      - FRONTEND_INTERNAL_PORT=5173
+      - "${FRONTEND_HOST_PORT:-8080}:8080"
+    user: root
     restart: unless-stopped
     volumes:
       - .:/app
       - /app/node_modules
+      - vite-cache:/app/node_modules/.vite
     depends_on:
       - server
     networks:
@@ -40,3 +42,6 @@ services:
 networks:
   aquapump-net:
     driver: bridge
+
+volumes:
+  vite-cache:
