@@ -12,15 +12,15 @@ test("server responds to root GET", async () => {
   // Wait for the server to start
   await new Promise((resolve) => {
     const interval = setInterval(() => {
-      if (stdout.includes("http://0.0.0.0:5173")) {
+      if (stdout.includes("http://localhost:8080/")) {
         clearInterval(interval);
         resolve(null);
       }
     }, 100);
   });
 
-  const res = await fetch("http://localhost:5173");
+  const res = await fetch("http://localhost:8080/");
   expect(res.status).toBe(200);
 
   server.kill();
-});
+}, 15000);
