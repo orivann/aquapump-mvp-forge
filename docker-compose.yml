@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   app:
     build:
@@ -8,7 +10,7 @@ services:
         UID: 1001
         GID: 1001
     ports:
-      - "${FRONTEND_HOST_PORT:-8080}:8080"
+      - "${FRONTEND_DEV_PORT:-8081}:8080"
     restart: unless-stopped
     volumes:
       - .:/app
@@ -25,7 +27,7 @@ services:
       dockerfile: Dockerfile
       target: prod
     ports:
-      - "${FRONTEND_HOST_PORT:-8080}:8080"
+      - "${FRONTEND_PROD_PORT:-8080}:8080"
     restart: unless-stopped
     networks:
       - aquapump-net
@@ -56,3 +58,4 @@ networks:
 
 volumes:
   vite-cache:
+
