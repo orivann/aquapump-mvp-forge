@@ -41,6 +41,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./Dockerfile.prod 
           push: ${{ github.event_name != 'pull_request' }} # Only push on merge to main, not on PRs
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
