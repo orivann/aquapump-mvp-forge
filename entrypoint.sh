@@ -7,4 +7,5 @@
 
 set -e
 
-
+# The following line was missing, which caused the container to exit immediately.
+exec "$@"
