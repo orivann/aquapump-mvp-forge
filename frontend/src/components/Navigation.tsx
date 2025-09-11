@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { useTranslation } from 'react-i18next';
 import ReactCountryFlag from "react-country-flag";
+import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import { Auth } from "aws-amplify";
 
 const Navigation = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, checkAuth } = useAuth();
+  const { language, changeLanguage } = useLanguage();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -19,6 +25,21 @@ const Navigation = () => {
     { href: "/about", label: t('nav.about') },
     { href: "/contact", label: t('nav.contact') },
   ];
+
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut();
+      checkAuth();
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out: ', error);
+    }
+  };
+
+  const handleLanguageChange = (lang: string) => {
+    changeLanguage(lang);
+    setIsOpen(false);
+  };
 
   return (
     <nav className="bg-white shadow-card border-b border-border sticky top-0 z-50">
@@ -47,21 +68,23 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop CTA & Language Switcher */}
+          {/* Desktop CTA & Language & Auth */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon" onClick={() => i18n.changeLanguage('en')}>
+            <Button variant="ghost" size="icon" onClick={() => handleLanguageChange('en')} disabled={language === 'en'}>
               <ReactCountryFlag countryCode="US" svg />
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => i18n.changeLanguage('he')}>
+            <Button variant="ghost" size="icon" onClick={() => handleLanguageChange('he')} disabled={language === 'he'}>
               <ReactCountryFlag countryCode="IL" svg />
             </Button>
-            <div className="flex items-center text-sm text-industrial-grey">
-              <Phone className="w-4 h-4 mr-1" />
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <Button variant="industrial" size="sm" asChild>
-              <Link to="/contact">{t('nav.get_quote')}</Link>
-            </Button>
+            {isAuthenticated ? (
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                {t('nav.logout')}
+              </Button>
+            ) : (
+              <Button variant="industrial" size="sm" asChild>
+                <Link to="/login">{t('nav.login')}</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -94,20 +117,24 @@ const Navigation = () => {
               ))}
               <div className="px-3 py-2 space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => {i18n.changeLanguage('en'); setIsOpen(false);}}>
+                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => handleLanguageChange('en')} disabled={language === 'en'}>
                     <ReactCountryFlag countryCode="US" svg />
                   </Button>
-                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => {i18n.changeLanguage('he'); setIsOpen(false);}}>
+                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => handleLanguageChange('he')} disabled={language === 'he'}>
                     <ReactCountryFlag countryCode="IL" svg />
                   </Button>
                 </div>
-                <div className="flex items-center text-sm text-industrial-grey pt-2">
-                  <Phone className="w-4 h-4 mr-2" />
-                  <span>+1 (555) 123-4567</span>
+                <div className="pt-4">
+                  {isAuthenticated ? (
+                    <Button variant="outline" size="sm" className="w-full" onClick={handleLogout}>
+                      {t('nav.logout')}
+                    </Button>
+                  ) : (
+                    <Button variant="industrial" size="sm" className="w-full" asChild>
+                      <Link to="/login">{t('nav.login')}</Link>
+                    </Button>
+                  )}
                 </div>
-                <Button variant="industrial" size="sm" className="w-full" asChild>
-                  <Link to="/contact">{t('nav.get_quote')}</Link>
-                </Button>
               </div>
             </div>
           </div>
