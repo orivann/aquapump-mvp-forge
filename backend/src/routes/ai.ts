@@ -4,7 +4,7 @@ import { authMiddleware } from '../middleware/auth';
 
 const router = Router();
 
-router.post('/chat', chatController);
+router.post('/chat', authMiddleware, chatController);
 
 // The admin routes for AI config will be protected
 router.get('/admin/ai-config', authMiddleware, getAiConfigController);
