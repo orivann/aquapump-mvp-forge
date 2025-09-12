@@ -1,0 +1,42 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.dev}
+    ports:
+      - "${FRONTEND_HOST_PORT:-8080}:${FRONTEND_INTERNAL_PORT:-5173}"
+    environment:
+      - PORT=${FRONTEND_INTERNAL_PORT:-5173}
+      - FRONTEND_INTERNAL_PORT=5173
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    networks:
+      - aquapump-net
+
+  server:
+    build: ./server
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    networks:
+      - aquapump-net
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - aquapump-net
+
+networks:
+  aquapump-net:
+    driver: bridge

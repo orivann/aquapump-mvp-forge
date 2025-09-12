@@ -1,5 +1,9 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { Auth } from 'aws-amplify';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { Amplify } from "aws-amplify";
+import * as Auth from "@aws-amplify/auth"; // ✅ namespace import
+import awsExports from "../aws-exports";
+
+Amplify.configure(awsExports);
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -9,16 +13,16 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<any>(null);
 
   const checkAuth = async () => {
     try {
-      const user = await Auth.currentAuthenticatedUser();
-      setUser(user);
+      const currentUser = await Auth.currentAuthenticatedUser();
+      setUser(currentUser);
       setIsAuthenticated(true);
-    } catch (error) {
+    } catch {
       setUser(null);
       setIsAuthenticated(false);
     }
@@ -37,8 +41,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
+
