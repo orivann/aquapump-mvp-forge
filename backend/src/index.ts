@@ -12,6 +12,10 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 app.use('/api/ai', aiRoutes);
 
 const startServer = async () => {
