@@ -4,16 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
 import { useTranslation } from 'react-i18next';
 import ReactCountryFlag from "react-country-flag";
-import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { Auth } from "aws-amplify";
 
 const Navigation = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated, checkAuth } = useAuth();
   const { language, changeLanguage } = useLanguage();
 
   const isActive = (path: string) => location.pathname === path;
@@ -25,16 +22,6 @@ const Navigation = () => {
     { href: "/about", label: t('nav.about') },
     { href: "/contact", label: t('nav.contact') },
   ];
-
-  const handleLogout = async () => {
-    try {
-      await Auth.signOut();
-      checkAuth();
-      navigate('/');
-    } catch (error) {
-      console.error('Error signing out: ', error);
-    }
-  };
 
   const handleLanguageChange = (lang: string) => {
     changeLanguage(lang);
@@ -76,15 +63,6 @@ const Navigation = () => {
             <Button variant="ghost" size="icon" onClick={() => handleLanguageChange('he')} disabled={language === 'he'}>
               <ReactCountryFlag countryCode="IL" svg />
             </Button>
-            {isAuthenticated ? (
-              <Button variant="outline" size="sm" onClick={handleLogout}>
-                {t('nav.logout')}
-              </Button>
-            ) : (
-              <Button variant="industrial" size="sm" asChild>
-                <Link to="/login">{t('nav.login')}</Link>
-              </Button>
-            )}
           </div>
 
           {/* Mobile menu button */}
@@ -123,17 +101,6 @@ const Navigation = () => {
                   <Button variant="ghost" size="sm" className="flex-1" onClick={() => handleLanguageChange('he')} disabled={language === 'he'}>
                     <ReactCountryFlag countryCode="IL" svg />
                   </Button>
-                </div>
-                <div className="pt-4">
-                  {isAuthenticated ? (
-                    <Button variant="outline" size="sm" className="w-full" onClick={handleLogout}>
-                      {t('nav.logout')}
-                    </Button>
-                  ) : (
-                    <Button variant="industrial" size="sm" className="w-full" asChild>
-                      <Link to="/login">{t('nav.login')}</Link>
-                    </Button>
-                  )}
                 </div>
               </div>
             </div>

@@ -10,7 +10,6 @@ import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import LoginPage from "./pages/LoginPage";
 
 const queryClient = new QueryClient();
 
@@ -38,8 +37,6 @@ const App = () => (
             }
           />
 
-          {/* Auth-related routes */}
-          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
