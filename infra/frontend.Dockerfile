@@ -1,7 +1,7 @@
 # --------------------------
 # Base image for frontend
 # --------------------------
-FROM node:20-alpine AS base
+FROM public.ecr.aws/docker/library/node:20-alpine AS base
 
 ARG UID=1001
 ARG GID=1001
@@ -23,10 +23,7 @@ FROM base AS dev
 COPY frontend/ .
 
 # Install dependencies for development
-RUN npm install --legacy-peer-deps && \
-    apk add --no-cache python3 py3-pip && \
-    pip install playwright && \
-    python3 -m playwright install
+RUN npm install
 
 # Add entrypoint script
 COPY infra/entrypoint.sh /usr/local/bin/

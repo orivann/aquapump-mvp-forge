@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM public.ecr.aws/docker/library/node:20-alpine AS base
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ COPY backend/package.json backend/package-lock.json* ./
 # --------------------------
 FROM base AS dev
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 COPY backend/ .
 
 EXPOSE 3001

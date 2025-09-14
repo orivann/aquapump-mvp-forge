@@ -49,14 +49,17 @@ services:
       - aquapump-net
 
   postgres:
-    image: "postgres:alpine"
+    container_name: postgres
+    image: "public.ecr.aws/bitnami/postgresql:14-debian-11"
     ports:
       - "5432:5432"
     restart: unless-stopped
+    env_file:
+      - ./.env
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:

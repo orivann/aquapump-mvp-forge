@@ -15,8 +15,6 @@ export const getAiConfigController = (req: Request, res: Response) => {
     }
 };
 
-import { query } from '../models';
-
 export const contactController = async (req: Request, res: Response) => {
     try {
         const { name, email, company, phone, service, message } = req.body;
