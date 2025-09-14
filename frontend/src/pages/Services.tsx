@@ -6,7 +6,7 @@ import { ArrowRight, Wrench, Shield, Clock, Users, Phone, CheckCircle } from "lu
 const Services = () => {
   const services = [
     {
-      icon: <Wrench className="w-12 h-12 text-industrial-blue" />,
+      icon: <Wrench className="w-12 h-12 text-primary" />,
       title: "Installation & Setup",
       description: "Professional installation of pump systems by certified technicians with complete system commissioning.",
       features: [
@@ -21,7 +21,7 @@ const Services = () => {
       pricing: "Starting at $850"
     },
     {
-      icon: <Shield className="w-12 h-12 text-industrial-blue" />,
+      icon: <Shield className="w-12 h-12 text-primary" />,
       title: "Maintenance & Repair",
       description: "Comprehensive maintenance programs and emergency repair services to keep your pumps running efficiently.",
       features: [
@@ -36,7 +36,7 @@ const Services = () => {
       pricing: "Plans starting at $299/month"
     },
     {
-      icon: <Users className="w-12 h-12 text-industrial-blue" />,
+      icon: <Users className="w-12 h-12 text-primary" />,
       title: "Custom Engineering",
       description: "Tailored pumping solutions designed specifically for your unique industrial requirements.",
       features: [
@@ -51,7 +51,7 @@ const Services = () => {
       pricing: "Quote based on requirements"
     },
     {
-      icon: <Clock className="w-12 h-12 text-industrial-blue" />,
+      icon: <Clock className="w-12 h-12 text-primary" />,
       title: "24/7 Emergency Support",
       description: "Round-the-clock technical support and emergency service to minimize downtime and keep operations running.",
       features: [
@@ -107,24 +107,24 @@ const Services = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-industrial text-white py-16">
+      <section className="bg-primary text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Professional Pump Services
             </h1>
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto">
               Comprehensive installation, maintenance, and support services to keep your pumping systems operating at peak performance.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="quote" size="lg" asChild>
+              <Button variant="secondary" size="lg" asChild>
                 <Link to="/contact">
                   Schedule Service
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-industrial-blue">
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
                 <Phone className="w-5 h-5 mr-2" />
                 Call: +1 (555) 123-4567
               </Button>
@@ -137,32 +137,32 @@ const Services = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Our Service Offerings
             </h2>
-            <p className="text-lg text-industrial-grey max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Complete range of professional services to support your pumping systems throughout their lifecycle.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="h-full border-0 shadow-card hover:shadow-industrial transition-shadow duration-300">
+              <Card key={index} className="h-full border-0 shadow-lg transition-shadow duration-300">
                 <CardHeader>
                   <div className="flex items-center mb-4">
                     {service.icon}
-                    <CardTitle className="text-2xl text-industrial-dark ml-4">{service.title}</CardTitle>
+                    <CardTitle className="text-2xl text-foreground ml-4">{service.title}</CardTitle>
                   </div>
-                  <p className="text-industrial-grey">{service.description}</p>
+                  <p className="text-muted-foreground">{service.description}</p>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-industrial-dark mb-2">Service Includes:</h4>
+                      <h4 className="font-semibold text-foreground mb-2">Service Includes:</h4>
                       <ul className="space-y-1">
                         {service.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-sm text-industrial-grey">
-                            <CheckCircle className="w-4 h-4 text-industrial-blue mr-2" />
+                          <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
+                            <CheckCircle className="w-4 h-4 text-primary mr-2" />
                             {feature}
                           </li>
                         ))}
@@ -171,10 +171,10 @@ const Services = () => {
                     
                     <div className="flex justify-between items-center pt-4 border-t border-border">
                       <div>
-                        <p className="text-sm text-industrial-grey">Timeline: {service.timeline}</p>
-                        <p className="font-semibold text-industrial-blue">{service.pricing}</p>
+                        <p className="text-sm text-muted-foreground">Timeline: {service.timeline}</p>
+                        <p className="font-semibold text-primary">{service.pricing}</p>
                       </div>
-                      <Button variant="industrial" asChild>
+                      <Button variant="default" asChild>
                         <Link to="/contact">Get Quote</Link>
                       </Button>
                     </div>
@@ -187,42 +187,42 @@ const Services = () => {
       </section>
 
       {/* Maintenance Packages */}
-      <section className="py-16 bg-industrial-blue-light">
+      <section className="py-16 bg-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Maintenance Packages
             </h2>
-            <p className="text-lg text-industrial-grey max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Preventive maintenance plans designed to maximize pump life and minimize unexpected downtime.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {maintenancePackages.map((pkg, index) => (
-              <Card key={index} className={`relative h-full border-0 shadow-card hover:shadow-industrial transition-shadow duration-300 ${pkg.popular ? 'ring-2 ring-industrial-blue' : ''}`}>
+              <Card key={index} className={`relative h-full border-0 shadow-lg transition-shadow duration-300 ${pkg.popular ? 'ring-2 ring-primary' : ''}`}>
                 {pkg.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-industrial-blue text-white px-4 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">
                       Most Popular
                     </span>
                   </div>
                 )}
                 <CardHeader className="text-center">
-                  <CardTitle className="text-xl text-industrial-dark">{pkg.name}</CardTitle>
-                  <div className="text-3xl font-bold text-industrial-blue mt-2">{pkg.price}</div>
+                  <CardTitle className="text-xl text-foreground">{pkg.name}</CardTitle>
+                  <div className="text-3xl font-bold text-primary mt-2">{pkg.price}</div>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3 mb-6">
                     {pkg.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-industrial-grey">
-                        <CheckCircle className="w-4 h-4 text-industrial-blue mr-2" />
+                      <li key={featureIndex} className="flex items-center text-muted-foreground">
+                        <CheckCircle className="w-4 h-4 text-primary mr-2" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                   <Button 
-                    variant={pkg.popular ? "industrial" : "outline"} 
+                    variant={pkg.popular ? "default" : "outline"}
                     className="w-full" 
                     asChild
                   >
@@ -236,33 +236,33 @@ const Services = () => {
       </section>
 
       {/* Emergency Service */}
-      <section className="py-16 bg-industrial-dark text-white">
+      <section className="py-16 bg-foreground text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Emergency Service Available
               </h2>
-              <p className="text-xl text-blue-100 mb-6">
+              <p className="text-xl text-primary-foreground/80 mb-6">
                 When pump failure threatens your operations, our emergency service team is ready to respond quickly with the expertise and equipment needed to get you back online.
               </p>
               
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
-                  <Clock className="w-6 h-6 text-industrial-blue mr-3" />
+                  <Clock className="w-6 h-6 text-primary mr-3" />
                   <span>2-4 hour emergency response time</span>
                 </div>
                 <div className="flex items-center">
-                  <Phone className="w-6 h-6 text-industrial-blue mr-3" />
+                  <Phone className="w-6 h-6 text-primary mr-3" />
                   <span>24/7 emergency hotline</span>
                 </div>
                 <div className="flex items-center">
-                  <Wrench className="w-6 h-6 text-industrial-blue mr-3" />
+                  <Wrench className="w-6 h-6 text-primary mr-3" />
                   <span>Mobile service units fully equipped</span>
                 </div>
               </div>
               
-              <Button variant="hero" size="lg">
+              <Button variant="default" size="lg">
                 <Phone className="w-5 h-5 mr-2" />
                 Emergency Hotline: +1 (555) 911-PUMP
               </Button>
@@ -270,7 +270,7 @@ const Services = () => {
             
             <div className="bg-white/10 rounded-lg p-8">
               <h3 className="text-2xl font-bold mb-4">Service Areas</h3>
-              <div className="grid grid-cols-2 gap-4 text-blue-100">
+              <div className="grid grid-cols-2 gap-4 text-primary-foreground/80">
                 <div>
                   <h4 className="font-semibold mb-2">Primary Markets</h4>
                   <ul className="space-y-1 text-sm">

@@ -41,22 +41,22 @@ const Contact = () => {
 
   const contactInfo = [
     {
-      icon: <Phone className="w-6 h-6 text-industrial-blue" />,
+      icon: <Phone className="w-6 h-6 text-primary" />,
       title: "Phone",
       details: ["+1 (555) 123-4567", "Emergency: +1 (555) 911-PUMP"]
     },
     {
-      icon: <Mail className="w-6 h-6 text-industrial-blue" />,
+      icon: <Mail className="w-6 h-6 text-primary" />,
       title: "Email",
       details: ["info@aquapump.com", "emergency@aquapump.com"]
     },
     {
-      icon: <MapPin className="w-6 h-6 text-industrial-blue" />,
+      icon: <MapPin className="w-6 h-6 text-primary" />,
       title: "Address",
       details: ["123 Industrial Blvd", "Manufacturing District", "Dallas, TX 75201"]
     },
     {
-      icon: <Clock className="w-6 h-6 text-industrial-blue" />,
+      icon: <Clock className="w-6 h-6 text-primary" />,
       title: "Hours",
       details: ["Mon-Fri: 7:00 AM - 6:00 PM", "Emergency: 24/7 Available"]
     }
@@ -86,13 +86,13 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-industrial text-white py-16">
+      <section className="bg-primary text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Contact AquaPump
             </h1>
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto">
               Ready to discuss your pumping requirements? Our team of experts is here to provide custom solutions and competitive quotes.
             </p>
           </div>
@@ -104,10 +104,10 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <Card className="border-0 shadow-card">
+            <Card className="border-0 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-2xl text-industrial-dark">Request a Quote</CardTitle>
-                <p className="text-industrial-grey">
+                <CardTitle className="text-2xl text-foreground">Request a Quote</CardTitle>
+                <p className="text-muted-foreground">
                   Fill out the form below and our team will get back to you within 24 hours.
                 </p>
               </CardHeader>
@@ -191,7 +191,7 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button type="submit" variant="industrial" size="lg" className="w-full">
+                  <Button type="submit" variant="default" size="lg" className="w-full">
                     <Send className="w-5 h-5 mr-2" />
                     Submit Quote Request
                   </Button>
@@ -202,17 +202,17 @@ const Contact = () => {
             {/* Contact Information */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-2xl font-bold text-industrial-dark mb-6">Get in Touch</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">Get in Touch</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {contactInfo.map((info, index) => (
-                    <Card key={index} className="border-0 shadow-card">
+                    <Card key={index} className="border-0 shadow-lg">
                       <CardContent className="p-6">
                         <div className="flex items-start space-x-3">
                           {info.icon}
                           <div>
-                            <h3 className="font-semibold text-industrial-dark mb-2">{info.title}</h3>
+                            <h3 className="font-semibold text-foreground mb-2">{info.title}</h3>
                             {info.details.map((detail, detailIndex) => (
-                              <p key={detailIndex} className="text-industrial-grey text-sm">
+                              <p key={detailIndex} className="text-muted-foreground text-sm">
                                 {detail}
                               </p>
                             ))}
@@ -225,13 +225,13 @@ const Contact = () => {
               </div>
 
               {/* Emergency Contact */}
-              <Card className="border-2 border-industrial-blue bg-industrial-blue-light">
+              <Card className="border-2 border-primary bg-accent">
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-industrial-dark mb-2">Emergency Service</h3>
-                  <p className="text-industrial-grey mb-4">
+                  <h3 className="text-xl font-bold text-foreground mb-2">Emergency Service</h3>
+                  <p className="text-muted-foreground mb-4">
                     Pump failure? Need immediate assistance? Our emergency team is available 24/7.
                   </p>
-                  <Button variant="industrial" size="lg" className="w-full">
+                  <Button variant="default" size="lg" className="w-full">
                     <Phone className="w-5 h-5 mr-2" />
                     Call Emergency Hotline
                   </Button>
@@ -243,36 +243,36 @@ const Contact = () => {
       </section>
 
       {/* Office Locations */}
-      <section className="py-16 bg-industrial-blue-light">
+      <section className="py-16 bg-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Our Locations
             </h2>
-            <p className="text-lg text-industrial-grey max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Multiple service centers to better serve you across the region.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {offices.map((office, index) => (
-              <Card key={index} className="border-0 shadow-card hover:shadow-industrial transition-shadow duration-300">
+              <Card key={index} className="border-0 shadow-lg transition-shadow duration-300">
                 <CardHeader>
-                  <CardTitle className="text-xl text-industrial-dark">{office.city}</CardTitle>
+                  <CardTitle className="text-xl text-foreground">{office.city}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex items-start">
-                      <MapPin className="w-4 h-4 text-industrial-blue mr-2 mt-1" />
-                      <p className="text-industrial-grey text-sm">{office.address}</p>
+                      <MapPin className="w-4 h-4 text-primary mr-2 mt-1" />
+                      <p className="text-muted-foreground text-sm">{office.address}</p>
                     </div>
                     <div className="flex items-center">
-                      <Phone className="w-4 h-4 text-industrial-blue mr-2" />
-                      <p className="text-industrial-grey text-sm">{office.phone}</p>
+                      <Phone className="w-4 h-4 text-primary mr-2" />
+                      <p className="text-muted-foreground text-sm">{office.phone}</p>
                     </div>
                     <div className="flex items-center">
-                      <Mail className="w-4 h-4 text-industrial-blue mr-2" />
-                      <p className="text-industrial-grey text-sm">Manager: {office.manager}</p>
+                      <Mail className="w-4 h-4 text-primary mr-2" />
+                      <p className="text-muted-foreground text-sm">Manager: {office.manager}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -286,19 +286,19 @@ const Contact = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-industrial-dark mb-4">Find Us</h2>
-            <p className="text-lg text-industrial-grey">Visit our Dallas headquarters for in-person consultations.</p>
+            <h2 className="text-3xl font-bold text-foreground mb-4">Find Us</h2>
+            <p className="text-lg text-muted-foreground">Visit our Dallas headquarters for in-person consultations.</p>
           </div>
           
-          <div className="bg-industrial-blue-light rounded-lg p-8 text-center">
-            <MapPin className="w-16 h-16 text-industrial-blue mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-industrial-dark mb-2">Dallas Headquarters</h3>
-            <p className="text-industrial-grey mb-4">123 Industrial Blvd, Manufacturing District, Dallas, TX 75201</p>
-            <p className="text-sm text-industrial-grey mb-6">
+          <div className="bg-accent rounded-lg p-8 text-center">
+            <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-foreground mb-2">Dallas Headquarters</h3>
+            <p className="text-muted-foreground mb-4">123 Industrial Blvd, Manufacturing District, Dallas, TX 75201</p>
+            <p className="text-sm text-muted-foreground mb-6">
               Interactive map and directions available on our website. 
               Visitor parking available on-site.
             </p>
-            <Button variant="industrial" asChild>
+            <Button variant="default" asChild>
               <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
                 Get Directions
               </a>

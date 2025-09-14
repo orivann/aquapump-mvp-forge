@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 13% 23%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 23%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 23%;
+
+    --primary: 221 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 168 100% 38%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 13% 91%;
+    --muted-foreground: 220 13% 46%;
+
+    --accent: 220 13% 91%;
+    --accent-foreground: 220 13% 23%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 84%;
+    --input: 220 13% 84%;
+    --ring: 221 100% 50%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 220 13% 5%;
+    --foreground: 220 13% 91%;
+
+    --card: 220 13% 5%;
+    --card-foreground: 220 13% 91%;
+
+    --popover: 220 13% 5%;
+    --popover-foreground: 220 13% 91%;
+
+    --primary: 221 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 168 100% 38%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 13% 11%;
+    --muted-foreground: 220 13% 46%;
+
+    --accent: 220 13% 11%;
+    --accent-foreground: 220 13% 91%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 11%;
+    --input: 220 13% 11%;
+    --ring: 221 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+  h5 { @apply text-lg; }
+}
+
+@layer components {
+  .card {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  .card:hover {
+    @apply transform -translate-y-1 shadow-lg;
+  }
+}

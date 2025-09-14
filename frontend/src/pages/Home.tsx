@@ -7,22 +7,22 @@ import industrialHero from "@/assets/industrial-hero.jpg";
 const Home = () => {
   const features = [
     {
-      icon: <Shield className="w-8 h-8 text-industrial-blue" />,
+      icon: <Shield className="w-8 h-8 text-primary" />,
       title: "Reliable Performance",
       description: "Built to last with premium materials and rigorous quality testing."
     },
     {
-      icon: <Wrench className="w-8 h-8 text-industrial-blue" />,
+      icon: <Wrench className="w-8 h-8 text-primary" />,
       title: "Expert Installation",
       description: "Professional installation and setup by certified technicians."
     },
     {
-      icon: <Clock className="w-8 h-8 text-industrial-blue" />,
+      icon: <Clock className="w-8 h-8 text-primary" />,
       title: "24/7 Support",
       description: "Round-the-clock technical support and emergency service."
     },
     {
-      icon: <Award className="w-8 h-8 text-industrial-blue" />,
+      icon: <Award className="w-8 h-8 text-primary" />,
       title: "Industry Certified",
       description: "All products meet or exceed industry standards and certifications."
     }
@@ -58,29 +58,29 @@ const Home = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${industrialHero})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-industrial-blue/90 to-industrial-blue-dark/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90"></div>
         </div>
         
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Reliable Industrial Pumping Solutions
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-blue-100">
+          <p className="text-xl md:text-2xl mb-8 text-primary-foreground/80">
             for Every Industry
           </p>
-          <p className="text-lg mb-8 max-w-2xl mx-auto text-blue-100">
+          <p className="text-lg mb-8 max-w-2xl mx-auto text-primary-foreground/80">
             Leading provider of industrial pumps and equipment with over 25 years of experience. 
             Trusted by industries worldwide for reliable, efficient pumping solutions.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="lg" asChild>
+            <Button variant="default" size="lg" asChild>
               <Link to="/contact">
                 Request a Quote
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
-            <Button variant="quote" size="lg" asChild>
+            <Button variant="secondary" size="lg" asChild>
               <Link to="/products">View Products</Link>
             </Button>
           </div>
@@ -91,21 +91,21 @@ const Home = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Why Choose AquaPump?
             </h2>
-            <p className="text-lg text-industrial-grey max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               We deliver exceptional quality and service that keeps your operations running smoothly.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="text-center border-0 shadow-card hover:shadow-industrial transition-shadow duration-300">
+              <Card key={index} className="text-center border-0 shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
                   <div className="flex justify-center mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold text-industrial-dark mb-3">{feature.title}</h3>
-                  <p className="text-industrial-grey">{feature.description}</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -114,34 +114,34 @@ const Home = () => {
       </section>
 
       {/* Products Section */}
-      <section className="py-16 bg-industrial-blue-light">
+      <section className="py-16 bg-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Our Product Categories
             </h2>
-            <p className="text-lg text-industrial-grey max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Comprehensive range of industrial pumping solutions for every application.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {productCategories.map((category, index) => (
-              <Card key={index} className="h-full border-0 shadow-card hover:shadow-industrial transition-shadow duration-300">
+              <Card key={index} className="h-full border-0 shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-industrial-dark mb-3">{category.title}</h3>
-                  <p className="text-industrial-grey mb-4">{category.description}</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">{category.title}</h3>
+                  <p className="text-muted-foreground mb-4">{category.description}</p>
                   
                   <ul className="space-y-2 mb-6">
                     {category.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-sm text-industrial-grey">
-                        <CheckCircle className="w-4 h-4 text-industrial-blue mr-2" />
+                      <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
+                        <CheckCircle className="w-4 h-4 text-primary mr-2" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                   
-                  <Button variant="industrial" className="w-full" asChild>
+                  <Button variant="default" className="w-full" asChild>
                     <Link to="/products">Learn More</Link>
                   </Button>
                 </CardContent>
@@ -154,10 +154,10 @@ const Home = () => {
       {/* Industries Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Industries We Serve
           </h2>
-          <p className="text-lg text-industrial-grey mb-12 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
             Trusted by leading companies across diverse industries worldwide.
           </p>
           
@@ -165,7 +165,7 @@ const Home = () => {
             {industries.map((industry, index) => (
               <div 
                 key={index}
-                className="bg-industrial-blue-light text-industrial-dark px-4 py-3 rounded-lg font-medium hover:bg-industrial-blue hover:text-white transition-colors duration-300"
+                className="bg-accent text-foreground px-4 py-3 rounded-lg font-medium hover:bg-primary hover:text-white transition-colors duration-300"
               >
                 {industry}
               </div>
@@ -175,23 +175,23 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-industrial text-white">
+      <section className="py-16 bg-primary text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Get Started?
           </h2>
-          <p className="text-xl mb-8 text-blue-100">
+          <p className="text-xl mb-8 text-primary-foreground/80">
             Contact our team of experts to discuss your pumping requirements and get a custom quote.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="quote" size="lg" asChild>
+            <Button variant="secondary" size="lg" asChild>
               <Link to="/contact">
                 Get Free Quote
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-industrial-blue" asChild>
+            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary" asChild>
               <Link to="/services">View Services</Link>
             </Button>
           </div>

@@ -9,7 +9,7 @@ const Products = () => {
     {
       id: "centrifugal",
       title: "Centrifugal Pumps",
-      icon: <Droplets className="w-8 h-8 text-industrial-blue" />,
+      icon: <Droplets className="w-8 h-8 text-primary" />,
       description: "High-efficiency centrifugal pumps for water transfer, circulation, and general industrial applications.",
       applications: ["Water Treatment", "HVAC Systems", "Industrial Cooling", "Fire Protection"],
       features: [
@@ -39,7 +39,7 @@ const Products = () => {
     {
       id: "submersible",
       title: "Submersible Pumps",
-      icon: <Zap className="w-8 h-8 text-industrial-blue" />,
+      icon: <Zap className="w-8 h-8 text-primary" />,
       description: "Reliable underwater pumping solutions designed for wells, sumps, and deep water applications.",
       applications: ["Well Water", "Sewage Systems", "Drainage", "Mining Dewatering"],
       features: [
@@ -69,7 +69,7 @@ const Products = () => {
     {
       id: "custom",
       title: "Custom Solutions",
-      icon: <Settings className="w-8 h-8 text-industrial-blue" />,
+      icon: <Settings className="w-8 h-8 text-primary" />,
       description: "Engineered pumping systems tailored to meet specific industrial requirements and unique applications.",
       applications: ["Chemical Processing", "Oil & Gas", "Specialized Manufacturing", "Research Facilities"],
       features: [
@@ -101,24 +101,24 @@ const Products = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-industrial text-white py-16">
+      <section className="bg-primary text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Industrial Pump Products
             </h1>
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto">
               Comprehensive range of high-quality pumps and pumping solutions for every industrial application.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="quote" size="lg" asChild>
+              <Button variant="secondary" size="lg" asChild>
                 <Link to="/contact">
                   Request Product Quote
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-industrial-blue" asChild>
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary" asChild>
                 <Link to="/services">View Services</Link>
               </Button>
             </div>
@@ -131,23 +131,23 @@ const Products = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {productCategories.map((category, index) => (
-              <div key={category.id} className={`${index % 2 === 1 ? 'bg-industrial-blue-light' : ''} rounded-lg p-8`}>
+              <div key={category.id} className={`${index % 2 === 1 ? 'bg-accent' : ''} rounded-lg p-8`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                   {/* Category Info */}
                   <div>
                     <div className="flex items-center mb-4">
                       {category.icon}
-                      <h2 className="text-3xl font-bold text-industrial-dark ml-3">{category.title}</h2>
+                      <h2 className="text-3xl font-bold text-foreground ml-3">{category.title}</h2>
                     </div>
                     
-                    <p className="text-lg text-industrial-grey mb-6">{category.description}</p>
+                    <p className="text-lg text-muted-foreground mb-6">{category.description}</p>
                     
                     {/* Applications */}
                     <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-industrial-dark mb-3">Applications</h3>
+                      <h3 className="text-lg font-semibold text-foreground mb-3">Applications</h3>
                       <div className="flex flex-wrap gap-2">
                         {category.applications.map((app, appIndex) => (
-                          <Badge key={appIndex} variant="secondary" className="bg-industrial-blue text-white">
+                          <Badge key={appIndex} variant="default" className="bg-primary text-white">
                             {app}
                           </Badge>
                         ))}
@@ -156,11 +156,11 @@ const Products = () => {
                     
                     {/* Features */}
                     <div>
-                      <h3 className="text-lg font-semibold text-industrial-dark mb-3">Key Features</h3>
+                      <h3 className="text-lg font-semibold text-foreground mb-3">Key Features</h3>
                       <ul className="space-y-2">
                         {category.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-industrial-grey">
-                            <Gauge className="w-4 h-4 text-industrial-blue mr-2" />
+                          <li key={featureIndex} className="flex items-center text-muted-foreground">
+                            <Gauge className="w-4 h-4 text-primary mr-2" />
                             {feature}
                           </li>
                         ))}
@@ -170,18 +170,18 @@ const Products = () => {
                   
                   {/* Models */}
                   <div>
-                    <h3 className="text-lg font-semibold text-industrial-dark mb-4">Available Models</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Available Models</h3>
                     <div className="space-y-4">
                       {category.models.map((model, modelIndex) => (
-                        <Card key={modelIndex} className="border border-industrial-blue/20 hover:shadow-industrial transition-shadow duration-300">
+                        <Card key={modelIndex} className="border border-primary/20 hover:shadow-lg transition-shadow duration-300">
                           <CardHeader className="pb-3">
-                            <CardTitle className="text-lg text-industrial-dark">{model.name}</CardTitle>
+                            <CardTitle className="text-lg text-foreground">{model.name}</CardTitle>
                           </CardHeader>
                           <CardContent>
-                            <p className="text-industrial-grey mb-2">{model.specs}</p>
+                            <p className="text-muted-foreground mb-2">{model.specs}</p>
                             <div className="flex justify-between items-center">
-                              <span className="font-semibold text-industrial-blue">{model.price}</span>
-                              <Button variant="industrial" size="sm" asChild>
+                              <span className="font-semibold text-primary">{model.price}</span>
+                              <Button variant="default" size="sm" asChild>
                                 <Link to="/contact">Get Quote</Link>
                               </Button>
                             </div>
@@ -198,23 +198,23 @@ const Products = () => {
       </section>
 
       {/* Technical Support Section */}
-      <section className="py-16 bg-industrial-dark text-white">
+      <section className="py-16 bg-foreground text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Need Technical Specifications?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto">
             Our engineering team can provide detailed technical documentation, performance curves, and custom specifications for any product.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="lg" asChild>
+            <Button variant="default" size="lg" asChild>
               <Link to="/contact">
                 Contact Engineering Team
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-industrial-blue" asChild>
+            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary" asChild>
               <Link to="/services">Technical Services</Link>
             </Button>
           </div>
