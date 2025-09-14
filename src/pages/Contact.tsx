@@ -6,9 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,8 +24,8 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Quote Request Submitted",
-      description: "Thank you for your interest. Our team will contact you within 24 hours.",
+      title: t("toasts.quoteSubmitted.title"),
+      description: t("toasts.quoteSubmitted.description"),
     });
     setFormData({
       name: "",
@@ -90,10 +92,10 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Contact AquaPump
+              {t("contact.hero.title")}
             </h1>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              Ready to discuss your pumping requirements? Our team of experts is here to provide custom solutions and competitive quotes.
+              {t("contact.hero.subtitle")}
             </p>
           </div>
         </div>
@@ -106,23 +108,23 @@ const Contact = () => {
             {/* Contact Form */}
             <Card className="border-0 shadow-card">
               <CardHeader>
-                <CardTitle className="text-2xl text-industrial-dark">Request a Quote</CardTitle>
+                <CardTitle className="text-2xl text-industrial-dark">{t("contact.form.title")}</CardTitle>
                 <p className="text-industrial-grey">
-                  Fill out the form below and our team will get back to you within 24 hours.
+                  {t("contact.form.subtitle")}
                 </p>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="name">Full Name *</Label>
+                      <Label htmlFor="name">{t("contact.form.name")} {t("contact.form.required")}</Label>
                       <Input
                         id="name"
                         type="text"
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
                         required
-                        placeholder="John Smith"
+                        placeholder={t("contact.form.placeholders.name")}
                       />
                     </div>
                     <div>

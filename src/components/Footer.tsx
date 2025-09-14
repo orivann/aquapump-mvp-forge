@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-industrial-dark text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -15,12 +17,12 @@ const Footer = () => {
               <span className="text-xl font-bold">AquaPump</span>
             </div>
             <p className="text-industrial-grey-light mb-4">
-              Leading provider of industrial pumping solutions with over 25 years of experience serving industries worldwide.
+              {t("footer.description")}
             </p>
             <div className="space-y-2">
               <div className="flex items-center text-sm">
                 <Phone className="w-4 h-4 mr-2 text-industrial-blue" />
-                <span>+1 (555) 123-4567</span>
+                <span>{t("nav.phone")}</span>
               </div>
               <div className="flex items-center text-sm">
                 <Mail className="w-4 h-4 mr-2 text-industrial-blue" />
@@ -31,31 +33,31 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">{t("footer.quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="text-industrial-grey-light hover:text-white transition-colors">
-                  Home
+                  {t("nav.home")}
                 </Link>
               </li>
               <li>
                 <Link to="/products" className="text-industrial-grey-light hover:text-white transition-colors">
-                  Products
+                  {t("nav.products")}
                 </Link>
               </li>
               <li>
                 <Link to="/services" className="text-industrial-grey-light hover:text-white transition-colors">
-                  Services
+                  {t("nav.services")}
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="text-industrial-grey-light hover:text-white transition-colors">
-                  About Us
+                  {t("nav.about")}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-industrial-grey-light hover:text-white transition-colors">
-                  Contact
+                  {t("nav.contact")}
                 </Link>
               </li>
             </ul>
@@ -63,7 +65,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Services</h3>
+            <h3 className="text-lg font-semibold mb-4">{t("footer.services")}</h3>
             <ul className="space-y-2 text-industrial-grey-light">
               <li>Installation & Setup</li>
               <li>Maintenance & Repair</li>
@@ -75,7 +77,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+            <h3 className="text-lg font-semibold mb-4">{t("footer.contactInfo")}</h3>
             <div className="space-y-3">
               <div className="flex items-start">
                 <MapPin className="w-4 h-4 mr-2 text-industrial-blue mt-1" />
@@ -99,17 +101,17 @@ const Footer = () => {
         <div className="border-t border-industrial-grey mt-8 pt-8 text-center">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-industrial-grey-light text-sm">
-              © 2024 AquaPump Industries. All rights reserved.
+              {t("footer.copyright")}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-industrial-grey-light hover:text-white text-sm transition-colors">
-                Privacy Policy
+                {t("footer.privacyPolicy")}
               </a>
               <a href="#" className="text-industrial-grey-light hover:text-white text-sm transition-colors">
-                Terms of Service
+                {t("footer.termsOfService")}
               </a>
               <a href="#" className="text-industrial-grey-light hover:text-white text-sm transition-colors">
-                Cookie Policy
+                {t("footer.cookiePolicy")}
               </a>
             </div>
           </div>
