@@ -19,8 +19,8 @@ const Home = () => {
           <p className="text-xl text-blue-200 mb-8 max-w-3xl mx-auto">
             {t('hero.subtitle')}
           </p>
-          <Button size="lg" variant="industrial" className="text-lg">
-            Request a Quote
+          <Button size="lg" variant="industrial" className="text-lg" asChild>
+            <Link to="/contact">Request a Quote</Link>
           </Button>
         </div>
       </section>

@@ -23,7 +23,10 @@ FROM base AS dev
 COPY frontend/ .
 
 # Install dependencies for development
-RUN npm install --legacy-peer-deps
+RUN npm install --legacy-peer-deps && \
+    apk add --no-cache python3 py3-pip && \
+    pip install playwright && \
+    python3 -m playwright install
 
 # Add entrypoint script
 COPY infra/entrypoint.sh /usr/local/bin/
