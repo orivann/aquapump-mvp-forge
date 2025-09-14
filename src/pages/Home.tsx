@@ -2,54 +2,53 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Wrench, Shield, Clock, Award } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import industrialHero from "@/assets/industrial-hero.jpg";
 
 const Home = () => {
-  const { t } = useTranslation();
-  
   const features = [
     {
       icon: <Shield className="w-8 h-8 text-industrial-blue" />,
-      title: t("home.features.reliability.title"),
-      description: t("home.features.reliability.description")
+      title: "Reliable Performance",
+      description: "Built to last with premium materials and rigorous quality testing."
     },
     {
       icon: <Wrench className="w-8 h-8 text-industrial-blue" />,
-      title: t("home.features.installation.title"),
-      description: t("home.features.installation.description")
+      title: "Expert Installation",
+      description: "Professional installation and setup by certified technicians."
     },
     {
       icon: <Clock className="w-8 h-8 text-industrial-blue" />,
-      title: t("home.features.support.title"),
-      description: t("home.features.support.description")
+      title: "24/7 Support",
+      description: "Round-the-clock technical support and emergency service."
     },
     {
       icon: <Award className="w-8 h-8 text-industrial-blue" />,
-      title: t("home.features.certified.title"),
-      description: t("home.features.certified.description")
+      title: "Industry Certified",
+      description: "All products meet or exceed industry standards and certifications."
     }
   ];
 
   const productCategories = [
     {
-      title: t("home.products.centrifugal.title"),
-      description: t("home.products.centrifugal.description"),
-      features: t("home.products.centrifugal.features", { returnObjects: true }) as string[]
+      title: "Centrifugal Pumps",
+      description: "High-efficiency pumps for water transfer and circulation applications.",
+      features: ["High flow rates", "Energy efficient", "Low maintenance"]
     },
     {
-      title: t("home.products.submersible.title"),
-      description: t("home.products.submersible.description"),
-      features: t("home.products.submersible.features", { returnObjects: true }) as string[]
+      title: "Submersible Pumps",
+      description: "Reliable underwater pumping solutions for various depths and applications.",
+      features: ["Waterproof design", "Corrosion resistant", "Variable speeds"]
     },
     {
-      title: t("home.products.custom.title"),
-      description: t("home.products.custom.description"),
-      features: t("home.products.custom.features", { returnObjects: true }) as string[]
+      title: "Custom Solutions",
+      description: "Tailored pumping systems designed for specific industrial requirements.",
+      features: ["Custom engineering", "Specialized materials", "Unique specifications"]
     }
   ];
 
-  const industries = t("home.industries.list", { returnObjects: true }) as string[];
+  const industries = [
+    "Manufacturing", "Oil & Gas", "Water Treatment", "Mining", "Agriculture", "Construction"
+  ];
 
   return (
     <div>
@@ -64,24 +63,25 @@ const Home = () => {
         
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            {t("home.hero.title")}
+            Reliable Industrial Pumping Solutions
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-blue-100">
-            {t("home.hero.subtitle")}
+            for Every Industry
           </p>
           <p className="text-lg mb-8 max-w-2xl mx-auto text-blue-100">
-            {t("home.hero.description")}
+            Leading provider of industrial pumps and equipment with over 25 years of experience. 
+            Trusted by industries worldwide for reliable, efficient pumping solutions.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="lg" asChild>
               <Link to="/contact">
-                {t("home.hero.requestQuote")}
+                Request a Quote
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
             <Button variant="quote" size="lg" asChild>
-              <Link to="/products">{t("home.hero.viewProducts")}</Link>
+              <Link to="/products">View Products</Link>
             </Button>
           </div>
         </div>
@@ -92,10 +92,10 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
-              {t("home.features.title")}
+              Why Choose AquaPump?
             </h2>
             <p className="text-lg text-industrial-grey max-w-2xl mx-auto">
-              {t("home.features.subtitle")}
+              We deliver exceptional quality and service that keeps your operations running smoothly.
             </p>
           </div>
           
@@ -118,10 +118,10 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
-              {t("home.products.title")}
+              Our Product Categories
             </h2>
             <p className="text-lg text-industrial-grey max-w-2xl mx-auto">
-              {t("home.products.subtitle")}
+              Comprehensive range of industrial pumping solutions for every application.
             </p>
           </div>
           
@@ -142,7 +142,7 @@ const Home = () => {
                   </ul>
                   
                   <Button variant="industrial" className="w-full" asChild>
-                    <Link to="/products">{t("home.products.learnMore")}</Link>
+                    <Link to="/products">Learn More</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -155,10 +155,10 @@ const Home = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-industrial-dark mb-4">
-            {t("home.industries.title")}
+            Industries We Serve
           </h2>
           <p className="text-lg text-industrial-grey mb-12 max-w-2xl mx-auto">
-            {t("home.industries.subtitle")}
+            Trusted by leading companies across diverse industries worldwide.
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -178,21 +178,21 @@ const Home = () => {
       <section className="py-16 bg-gradient-industrial text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {t("home.cta.title")}
+            Ready to Get Started?
           </h2>
           <p className="text-xl mb-8 text-blue-100">
-            {t("home.cta.subtitle")}
+            Contact our team of experts to discuss your pumping requirements and get a custom quote.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="quote" size="lg" asChild>
               <Link to="/contact">
-                {t("home.cta.getFreeQuote")}
+                Get Free Quote
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-industrial-blue" asChild>
-              <Link to="/services">{t("home.cta.viewServices")}</Link>
+              <Link to="/services">View Services</Link>
             </Button>
           </div>
         </div>

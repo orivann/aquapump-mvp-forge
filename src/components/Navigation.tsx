@@ -2,22 +2,19 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { t } = useTranslation();
 
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
-    { href: "/", label: t("nav.home") },
-    { href: "/products", label: t("nav.products") },
-    { href: "/services", label: t("nav.services") },
-    { href: "/about", label: t("nav.about") },
-    { href: "/contact", label: t("nav.contact") },
+    { href: "/", label: "Home" },
+    { href: "/products", label: "Products" },
+    { href: "/services", label: "Services" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
   ];
 
   return (
@@ -51,11 +48,10 @@ const Navigation = () => {
           <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center text-sm text-industrial-grey">
               <Phone className="w-4 h-4 mr-1" />
-              <span>{t("nav.phone")}</span>
+              <span>+1 (555) 123-4567</span>
             </div>
-            <LanguageSwitcher />
             <Button variant="industrial" size="sm" asChild>
-              <Link to="/contact">{t("nav.getQuote")}</Link>
+              <Link to="/contact">Get Quote</Link>
             </Button>
           </div>
 
@@ -90,11 +86,10 @@ const Navigation = () => {
               <div className="px-3 py-2 space-y-2">
                 <div className="flex items-center text-sm text-industrial-grey">
                   <Phone className="w-4 h-4 mr-2" />
-                  <span>{t("nav.phone")}</span>
+                  <span>+1 (555) 123-4567</span>
                 </div>
-                <LanguageSwitcher />
                 <Button variant="industrial" size="sm" className="w-full" asChild>
-                  <Link to="/contact">{t("nav.getQuote")}</Link>
+                  <Link to="/contact">Get Quote</Link>
                 </Button>
               </div>
             </div>
