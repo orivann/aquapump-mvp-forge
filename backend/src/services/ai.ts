@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { query } from '../models';
 
 const getSystemPrompt = () => `You are an AI assistant for AquaPump Industries, a new provider of industrial pumping solutions.
 
@@ -44,7 +43,7 @@ export const updateAiConfig = (service: string, model: string) => {
 };
 
 export const getAiChatResponse = async (message: string) => {
-    const { service: aiService, model } = currentAiConfig;
+    const { service: aiService } = currentAiConfig;
 
     if (!message) {
         throw new Error('Message is required');
@@ -147,8 +146,12 @@ export const getAiChatResponse = async (message: string) => {
         }
 
         return aiResponse;
-    } catch (error: any) {
-        console.error(`Error calling ${aiService} API:`, error.response ? error.response.data : error.message);
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+            console.error(`Error calling ${aiService} API:`, error.response ? error.response.data : error.message);
+        } else {
+            console.error(`Error calling ${aiService} API:`, error);
+        }
         throw new Error(`Failed to get response from ${aiService}`);
     }
 };

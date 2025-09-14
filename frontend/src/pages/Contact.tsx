@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,20 +20,29 @@ const Contact = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Quote Request Submitted",
-      description: "Thank you for your interest. Our team will contact you within 24 hours.",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      service: "",
-      message: ""
-    });
+    try {
+      await axios.post('/api/contact', formData);
+      toast({
+        title: "Quote Request Submitted",
+        description: "Thank you for your interest. Our team will contact you within 24 hours.",
+      });
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        phone: "",
+        service: "",
+        message: ""
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an error submitting your request. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -231,9 +241,11 @@ const Contact = () => {
                   <p className="text-industrial-grey mb-4">
                     Pump failure? Need immediate assistance? Our emergency team is available 24/7.
                   </p>
-                  <Button variant="industrial" size="lg" className="w-full">
-                    <Phone className="w-5 h-5 mr-2" />
-                    Call Emergency Hotline
+                  <Button variant="industrial" size="lg" className="w-full" asChild>
+                    <a href="tel:+15559117867">
+                      <Phone className="w-5 h-5 mr-2" />
+                      Call Emergency Hotline
+                    </a>
                   </Button>
                 </CardContent>
               </Card>

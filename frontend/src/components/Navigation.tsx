@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
 import { useTranslation } from 'react-i18next';
 import ReactCountryFlag from "react-country-flag";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 
 const Navigation = () => {
   const { t } = useTranslation();
