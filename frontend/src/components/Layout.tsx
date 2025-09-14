@@ -1,5 +1,6 @@
 import Navigation from "./Navigation";
 import Footer from "./Footer";
+import Chatbot from "./Chatbot";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ const Layout = ({ children }: LayoutProps) => {
       <Navigation />
       <main className="flex-1">{children}</main>
       <Footer />
+      <Chatbot />
     </div>
   );
 };
