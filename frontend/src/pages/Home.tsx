@@ -3,109 +3,126 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Wrench, Shield, Clock, Award } from "lucide-react";
 import industrialHero from "@/assets/industrial-hero.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Home = () => {
+  const { t, isRTL } = useLanguage();
+
   const features = [
     {
-      icon: <Shield className="w-8 h-8 text-primary" />,
-      title: "Reliable Performance",
-      description: "Built to last with premium materials and rigorous quality testing."
+      icon: <Shield className="w-8 h-8 text-primary animate-float" />,
+      title: t('features.reliable.title'),
+      description: t('features.reliable.desc')
     },
     {
-      icon: <Wrench className="w-8 h-8 text-primary" />,
-      title: "Expert Installation",
-      description: "Professional installation and setup by certified technicians."
+      icon: <Wrench className="w-8 h-8 text-primary animate-float" style={{ animationDelay: '0.5s' }} />,
+      title: t('features.expert.title'),
+      description: t('features.expert.desc')
     },
     {
-      icon: <Clock className="w-8 h-8 text-primary" />,
-      title: "24/7 Support",
-      description: "Round-the-clock technical support and emergency service."
+      icon: <Clock className="w-8 h-8 text-primary animate-float" style={{ animationDelay: '1s' }} />,
+      title: t('features.support.title'),
+      description: t('features.support.desc')
     },
     {
-      icon: <Award className="w-8 h-8 text-primary" />,
-      title: "Industry Certified",
-      description: "All products meet or exceed industry standards and certifications."
+      icon: <Award className="w-8 h-8 text-primary animate-float" style={{ animationDelay: '1.5s' }} />,
+      title: t('features.certified.title'),
+      description: t('features.certified.desc')
     }
   ];
 
   const productCategories = [
     {
-      title: "Centrifugal Pumps",
-      description: "High-efficiency pumps for water transfer and circulation applications.",
-      features: ["High flow rates", "Energy efficient", "Low maintenance"]
+      title: t('products.centrifugal.title'),
+      description: t('products.centrifugal.desc'),
+      features: [t('products.centrifugal.feature1'), t('products.centrifugal.feature2'), t('products.centrifugal.feature3')]
     },
     {
-      title: "Submersible Pumps",
-      description: "Reliable underwater pumping solutions for various depths and applications.",
-      features: ["Waterproof design", "Corrosion resistant", "Variable speeds"]
+      title: t('products.submersible.title'),
+      description: t('products.submersible.desc'),
+      features: [t('products.submersible.feature1'), t('products.submersible.feature2'), t('products.submersible.feature3')]
     },
     {
-      title: "Custom Solutions",
-      description: "Tailored pumping systems designed for specific industrial requirements.",
-      features: ["Custom engineering", "Specialized materials", "Unique specifications"]
+      title: t('products.custom.title'),
+      description: t('products.custom.desc'),
+      features: [t('products.custom.feature1'), t('products.custom.feature2'), t('products.custom.feature3')]
     }
   ];
 
   const industries = [
-    "Manufacturing", "Oil & Gas", "Water Treatment", "Mining", "Agriculture", "Construction"
+    t('industries.manufacturing'), 
+    t('industries.oilGas'), 
+    t('industries.waterTreatment'), 
+    t('industries.mining'), 
+    t('industries.agriculture'), 
+    t('industries.construction')
   ];
 
   return (
-    <div>
+    <div className={isRTL ? 'rtl' : 'ltr'}>
       {/* Hero Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center transform transition-transform duration-1000 hover:scale-105"
           style={{ backgroundImage: `url(${industrialHero})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90"></div>
+          <div className="absolute inset-0 gradient-hero"></div>
         </div>
         
-        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Reliable Industrial Pumping Solutions
+        <div className="relative z-10 text-center text-white max-w-5xl mx-auto responsive-padding animate-fade-in">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance leading-tight">
+            {t('hero.title')}
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-primary-foreground/80">
-            for Every Industry
+          <p className="text-xl md:text-3xl mb-8 text-primary-foreground/90 font-medium">
+            {t('hero.subtitle')}
           </p>
-          <p className="text-lg mb-8 max-w-2xl mx-auto text-primary-foreground/80">
-            Leading provider of industrial pumps and equipment with over 25 years of experience. 
-            Trusted by industries worldwide for reliable, efficient pumping solutions.
+          <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-primary-foreground/80 leading-relaxed text-pretty">
+            {t('hero.description')}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="default" size="lg" asChild>
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+            <Button variant="default" size="lg" className="btn-primary text-lg px-8 py-3 h-auto animate-scale-in" asChild>
               <Link to="/contact">
-                Request a Quote
-                <ArrowRight className="w-5 h-5 ml-2" />
+                {t('hero.requestQuote')}
+                <ArrowRight className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} />
               </Link>
             </Button>
-            <Button variant="secondary" size="lg" asChild>
-              <Link to="/products">View Products</Link>
+            <Button variant="secondary" size="lg" className="btn-secondary text-lg px-8 py-3 h-auto animate-scale-in" style={{ animationDelay: '0.2s' }} asChild>
+              <Link to="/products">{t('hero.viewProducts')}</Link>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose AquaPump?
+      <section className="py-20 bg-gradient-to-br from-background to-accent/30">
+        <div className="max-w-7xl mx-auto responsive-padding">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 text-balance">
+              {t('features.title')}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We deliver exceptional quality and service that keeps your operations running smoothly.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-pretty">
+              {t('features.subtitle')}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="text-center border-0 shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <div className="flex justify-center mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+              <Card 
+                key={index} 
+                className="text-center border-0 bg-white/80 backdrop-blur-sm hover:bg-white transition-all duration-500 group animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-8">
+                  <div className="flex justify-center mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-pretty">
+                    {feature.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -114,35 +131,43 @@ const Home = () => {
       </section>
 
       {/* Products Section */}
-      <section className="py-16 bg-accent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Our Product Categories
+      <section className="py-20 bg-accent/30">
+        <div className="max-w-7xl mx-auto responsive-padding">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 text-balance">
+              {t('products.title')}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive range of industrial pumping solutions for every application.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-pretty">
+              {t('products.subtitle')}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {productCategories.map((category, index) => (
-              <Card key={index} className="h-full border-0 shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-foreground mb-3">{category.title}</h3>
-                  <p className="text-muted-foreground mb-4">{category.description}</p>
+              <Card 
+                key={index} 
+                className="h-full border-0 bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-500 group animate-fade-in"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                <CardContent className="p-8">
+                  <h3 className="text-xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                    {category.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-6 leading-relaxed text-pretty">
+                    {category.description}
+                  </p>
                   
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-3 mb-8">
                     {category.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
-                        <CheckCircle className="w-4 h-4 text-primary mr-2" />
-                        {feature}
+                      <li key={featureIndex} className={`flex items-center text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
+                        <CheckCircle className={`w-4 h-4 text-primary ${isRTL ? 'ml-3' : 'mr-3'} flex-shrink-0`} />
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
                   
-                  <Button variant="default" className="w-full" asChild>
-                    <Link to="/products">Learn More</Link>
+                  <Button variant="default" className="w-full btn-primary group-hover:scale-105 transition-transform duration-300" asChild>
+                    <Link to="/products">{t('products.learnMore')}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -152,22 +177,28 @@ const Home = () => {
       </section>
 
       {/* Industries Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Industries We Serve
-          </h2>
-          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Trusted by leading companies across diverse industries worldwide.
-          </p>
+      <section className="py-20 bg-gradient-to-br from-white to-accent/20">
+        <div className="max-w-7xl mx-auto responsive-padding text-center">
+          <div className="mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 text-balance">
+              {t('industries.title')}
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed text-pretty">
+              {t('industries.subtitle')}
+            </p>
+          </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {industries.map((industry, index) => (
               <div 
                 key={index}
-                className="bg-accent text-foreground px-4 py-3 rounded-lg font-medium hover:bg-primary hover:text-white transition-colors duration-300"
+                className="bg-white/80 backdrop-blur-sm text-foreground px-6 py-4 rounded-xl font-medium 
+                          hover:bg-primary hover:text-white transform hover:-translate-y-1 hover:scale-105
+                          transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer
+                          animate-fade-in border border-border/20"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {industry}
+                <span className="text-sm md:text-base">{industry}</span>
               </div>
             ))}
           </div>
@@ -175,25 +206,34 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl mb-8 text-primary-foreground/80">
-            Contact our team of experts to discuss your pumping requirements and get a custom quote.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg" asChild>
-              <Link to="/contact">
-                Get Free Quote
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary" asChild>
-              <Link to="/services">View Services</Link>
-            </Button>
+      <section className="py-20 gradient-primary text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
+        <div className="relative z-10 max-w-5xl mx-auto responsive-padding text-center">
+          <div className="animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-balance">
+              {t('cta.title')}
+            </h2>
+            <p className="text-xl md:text-2xl mb-10 text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed text-pretty">
+              {t('cta.subtitle')}
+            </p>
+            
+            <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+              <Button variant="secondary" size="lg" className="btn-secondary text-lg px-8 py-3 h-auto animate-scale-in shadow-xl" asChild>
+                <Link to="/contact">
+                  {t('cta.getFreeQuote')}
+                  <ArrowRight className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} />
+                </Link>
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="glass-effect text-white hover:bg-white/20 border-white/30 text-lg px-8 py-3 h-auto animate-scale-in" 
+                style={{ animationDelay: '0.2s' }}
+                asChild
+              >
+                <Link to="/services">{t('cta.viewServices')}</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
