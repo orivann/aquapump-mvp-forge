@@ -13,11 +13,6 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        'sans': ['Inter', 'Heebo', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        'hebrew': ['Heebo', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        'english': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

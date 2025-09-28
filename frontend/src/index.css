@@ -2,84 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
-All colors MUST be HSL.
+/*
+  AquaPump Design System v2.0
+  Inspired by water, energy, and sustainability.
+  Color Palette: Blues, Teals, White, Metallic Accents
+  All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 13% 23%;
+    /* Core Colors - Light Mode */
+    --background: 0 0% 100%; /* White */
+    --foreground: 215 28% 17%; /* Dark Blue-Gray */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 13% 23%;
+    --card: 220 20% 97%; /* Light Gray-Blue */
+    --card-foreground: 215 28% 17%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 23%;
+    --popover-foreground: 215 28% 17%;
 
-    --primary: 210 100% 50%;
+    /* Primary (Aqua Blue) */
+    --primary: 195 85% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 168 100% 40%;
+    /* Secondary (Teal) */
+    --secondary: 175 70% 40%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 13% 91%;
-    --muted-foreground: 220 13% 46%;
+    /* Muted (Subtle Gray) */
+    --muted: 220 20% 94%;
+    --muted-foreground: 215 20% 45%;
 
-    --accent: 220 13% 96%;
-    --accent-foreground: 220 13% 23%;
+    /* Accent (Bright Teal) */
+    --accent: 180 80% 50%;
+    --accent-foreground: 215 28% 17%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 210 100% 50%;
+    /* Controls */
+    --border: 220 20% 88%;
+    --input: 220 20% 92%;
+    --ring: 195 85% 45%;
 
     --radius: 0.75rem;
-    
-    /* Enhanced gradients and shadows */
+
+    /* Gradients & Shadows */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary) / 0.9), hsl(var(--secondary) / 0.9));
-    --shadow-elegant: 0 10px 40px -10px hsl(var(--primary) / 0.2);
-    --shadow-card: 0 4px 20px -2px hsl(220 13% 23% / 0.1);
-    
-    /* Smooth transitions */
+    --shadow-card: 0 4px 20px -2px hsl(220 13% 23% / 0.08);
+    --shadow-interactive: 0 8px 30px -5px hsl(var(--primary) / 0.25);
+
+    /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 220 13% 8%;
-    --foreground: 220 13% 91%;
+    /* Core Colors - Dark Mode */
+    --background: 215 30% 12%; /* Deep Navy */
+    --foreground: 210 20% 88%; /* Light Gray-Blue */
 
-    --card: 220 13% 10%;
-    --card-foreground: 220 13% 91%;
+    --card: 215 30% 18%; /* Dark Navy */
+    --card-foreground: 210 20% 88%;
 
-    --popover: 220 13% 10%;
-    --popover-foreground: 220 13% 91%;
+    --popover: 215 30% 15%;
+    --popover-foreground: 210 20% 88%;
 
-    --primary: 210 100% 50%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary (Aqua Blue) */
+    --primary: 195 80% 55%;
+    --primary-foreground: 215 30% 12%;
 
-    --secondary: 168 100% 40%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary (Teal) */
+    --secondary: 175 70% 50%;
+    --secondary-foreground: 215 30% 12%;
 
-    --muted: 220 13% 15%;
-    --muted-foreground: 220 13% 60%;
+    /* Muted (Dark Gray) */
+    --muted: 215 25% 25%;
+    --muted-foreground: 210 20% 65%;
 
-    --accent: 220 13% 15%;
-    --accent-foreground: 220 13% 91%;
+    /* Accent (Bright Teal) */
+    --accent: 180 80% 60%;
+    --accent-foreground: 215 30% 12%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 20%;
-    --input: 220 13% 20%;
-    --ring: 210 100% 50%;
-    
-    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.3);
+    /* Controls */
+    --border: 215 25% 30%;
+    --input: 215 25% 28%;
+    --ring: 195 80% 55%;
+
+    /* Shadows */
     --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.2);
+    --shadow-interactive: 0 8px 40px -5px hsl(var(--primary) / 0.3);
   }
 }
 
@@ -90,121 +104,68 @@ All colors MUST be HSL.
 
   html {
     scroll-behavior: smooth;
-  }
-
-  html[dir="rtl"] {
-    font-family: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-
-  html[dir="ltr"] {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
-    line-height: 1.75;
+    line-height: 1.7;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply font-bold tracking-tight text-balance;
   }
 
-  h1 { @apply text-4xl lg:text-5xl; }
-  h2 { @apply text-3xl lg:text-4xl; }
-  h3 { @apply text-2xl lg:text-3xl; }
-  h4 { @apply text-xl lg:text-2xl; }
-  h5 { @apply text-lg lg:text-xl; }
-  
-  /* Focus styles for accessibility */
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
+
+  /* Accessibility focus styles */
   :focus-visible {
-    @apply outline-2 outline-primary outline-offset-2;
-  }
-  
-  /* Enhanced button styles */
-  button, [role="button"] {
-    @apply transition-all duration-200;
-  }
-  
-  /* Better link styles */
-  a {
-    @apply transition-colors duration-200;
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
 }
 
 @layer components {
-  .card {
-    @apply transition-all duration-300 ease-in-out rounded-xl border backdrop-blur-sm;
+  .container-fluid {
+      @apply w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .interactive-card {
+    @apply bg-card rounded-xl border transition-all duration-300;
     box-shadow: var(--shadow-card);
   }
-  
-  .card:hover {
-    @apply transform -translate-y-2 scale-[1.02];
-    box-shadow: var(--shadow-elegant);
+
+  .interactive-card:hover {
+    @apply transform -translate-y-2;
+    box-shadow: var(--shadow-interactive);
   }
-  
-  .gradient-primary {
-    background: var(--gradient-primary);
+
+  .btn {
+      @apply inline-flex items-center justify-center rounded-md text-sm font-semibold
+             transition-all duration-300 ease-in-out
+             focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
   }
-  
-  .gradient-hero {
-    background: var(--gradient-hero);
-  }
-  
-  .glass-effect {
-    @apply backdrop-blur-md bg-white/10 border border-white/20;
-  }
-  
+
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 
-           shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
-           transition-all duration-200 ease-in-out
-           focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
+      @apply btn bg-primary text-primary-foreground hover:bg-primary/90
+             shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
   }
-  
+
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90
-           shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
-           transition-all duration-200 ease-in-out
-           focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2;
+      @apply btn bg-secondary text-secondary-foreground hover:bg-secondary/90;
   }
-  
-  /* RTL specific animations */
-  [dir="rtl"] .slide-in-right {
-    @apply animate-slide-in-left;
+
+  .btn-ghost {
+      @apply btn hover:bg-accent hover:text-accent-foreground;
   }
-  
-  [dir="ltr"] .slide-in-right {
-    @apply animate-slide-in-right;
-  }
-  
-  /* Enhanced mobile responsiveness */
-  .responsive-padding {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
-  
-  .responsive-margin {
-    @apply mx-4 sm:mx-6 lg:mx-8;
-  }
-  
-  /* Accessibility improvements */
-  .sr-only {
-    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
-    clip: rect(0, 0, 0, 0);
-  }
-  
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-  }
-  
-  /* Typography enhancements */
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  .text-pretty {
-    text-wrap: pretty;
+
+  .glassmorphism {
+      @apply bg-card/60 backdrop-blur-lg border border-white/10;
   }
 }
