@@ -1,309 +1,159 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Phone, Mail, MapPin, Send } from "lucide-react";
+
+// Placeholder Data
+const contactPoints = [
+  { icon: <Mail className="w-8 h-8 text-primary" />, title: "General Inquiries", detail: "info@aquapump.com" },
+  { icon: <Phone className="w-8 h-8 text-primary" />, title: "Sales Department", detail: "+1 (555) 123-4567" },
+  { icon: <MapPin className="w-8 h-8 text-primary" />, title: "Headquarters", detail: "123 Industrial Blvd, Dallas, TX" },
+];
+
+const faqItems = [
+  {
+    question: "What is the warranty on AquaPump products?",
+    answer: "All AquaPump products come with a standard 2-year manufacturer's warranty covering defects in materials and workmanship. Extended warranty options are available at the time of purchase.",
+  },
+  {
+    question: "Do you offer custom-engineered solutions?",
+    answer: "Yes, we specialize in custom solutions. Our engineering team can work with you to design a pump or a complete system tailored to your specific application, materials, and performance requirements.",
+  },
+  {
+    question: "What are your lead times for standard products?",
+    answer: "Lead times for standard products typically range from 2 to 4 weeks. For time-sensitive orders, please contact our sales department to discuss expedited options.",
+  },
+    {
+    question: "How can I get technical support or documentation?",
+    answer: "Technical datasheets, installation manuals, and CAD models are available for download on each product's detail page. For further assistance, our technical support team is available 24/7 via phone or email.",
+  },
+];
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    service: "",
-    message: ""
-  });
-  const { toast } = useToast();
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Quote Request Submitted",
-      description: "Thank you for your interest. Our team will contact you within 24 hours.",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      service: "",
-      message: ""
-    });
-  };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // In a real app, you would handle form submission to a backend here.
+        setFormSubmitted(true);
+    };
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const contactInfo = [
-    {
-      icon: <Phone className="w-6 h-6 text-primary" />,
-      title: "Phone",
-      details: ["+1 (555) 123-4567", "Emergency: +1 (555) 911-PUMP"]
-    },
-    {
-      icon: <Mail className="w-6 h-6 text-primary" />,
-      title: "Email",
-      details: ["info@aquapump.com", "emergency@aquapump.com"]
-    },
-    {
-      icon: <MapPin className="w-6 h-6 text-primary" />,
-      title: "Address",
-      details: ["123 Industrial Blvd", "Manufacturing District", "Dallas, TX 75201"]
-    },
-    {
-      icon: <Clock className="w-6 h-6 text-primary" />,
-      title: "Hours",
-      details: ["Mon-Fri: 7:00 AM - 6:00 PM", "Emergency: 24/7 Available"]
-    }
-  ];
-
-  const offices = [
-    {
-      city: "Dallas (Headquarters)",
-      address: "123 Industrial Blvd, Dallas, TX 75201",
-      phone: "+1 (555) 123-4567",
-      manager: "Mike Thompson"
-    },
-    {
-      city: "Houston",
-      address: "456 Pump Street, Houston, TX 77001", 
-      phone: "+1 (555) 234-5678",
-      manager: "Sarah Chen"
-    },
-    {
-      city: "Oklahoma City",
-      address: "789 Service Ave, Oklahoma City, OK 73101",
-      phone: "+1 (555) 345-6789", 
-      manager: "Lisa Rodriguez"
-    }
-  ];
+    const fadeIn = {
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.3 },
+        transition: { duration: 0.7 }
+    };
 
   return (
-    <div className="min-h-screen">
+    <div className="bg-background">
       {/* Hero Section */}
-      <section className="bg-primary text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Contact AquaPump
-            </h1>
-            <p className="text-xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto">
-              Ready to discuss your pumping requirements? Our team of experts is here to provide custom solutions and competitive quotes.
-            </p>
-          </div>
-        </div>
+      <section className="py-32 bg-primary text-center text-primary-foreground">
+        <motion.h1
+            className="text-5xl md:text-7xl font-bold mb-4"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+            Get in Touch
+        </motion.h1>
+        <motion.p
+            className="text-xl max-w-3xl mx-auto text-primary-foreground/90"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          We're here to help. Whether you have a question about our products, need a quote, or require technical support, our team is ready to assist you.
+        </motion.p>
       </section>
 
-      {/* Contact Form & Info */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      {/* Contact Form and Info Section */}
+      <section className="py-20">
+        <div className="container-fluid mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* Contact Form */}
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl text-foreground">Request a Quote</CardTitle>
-                <p className="text-muted-foreground">
-                  Fill out the form below and our team will get back to you within 24 hours.
-                </p>
-              </CardHeader>
-              <CardContent>
+            <motion.div className="bg-card p-8 rounded-xl shadow-lg" {...fadeIn}>
+              <h2 className="text-3xl font-bold mb-2">Send us a Message</h2>
+              <p className="text-muted-foreground mb-8">Our team will get back to you within one business day.</p>
+
+              {formSubmitted ? (
+                <div className="text-center py-12">
+                    <Send className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold">Thank You!</h3>
+                    <p className="text-muted-foreground">Your message has been sent successfully. We'll be in touch shortly.</p>
+                </div>
+              ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="name">Full Name *</Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        value={formData.name}
-                        onChange={(e) => handleInputChange("name", e.target.value)}
-                        required
-                        placeholder="John Smith"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="email">Email Address *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleInputChange("email", e.target.value)}
-                        required
-                        placeholder="john@company.com"
-                      />
-                    </div>
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    <Input placeholder="Your Name" required />
+                    <Input type="email" placeholder="Your Email" required />
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="company">Company</Label>
-                      <Input
-                        id="company"
-                        type="text"
-                        value={formData.company}
-                        onChange={(e) => handleInputChange("company", e.target.value)}
-                        placeholder="Your Company"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => handleInputChange("phone", e.target.value)}
-                        placeholder="+1 (555) 123-4567"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="service">Service Needed</Label>
-                    <Select value={formData.service} onValueChange={(value) => handleInputChange("service", value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a service" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pump-selection">Pump Selection</SelectItem>
-                        <SelectItem value="installation">Installation</SelectItem>
-                        <SelectItem value="maintenance">Maintenance</SelectItem>
-                        <SelectItem value="repair">Repair Service</SelectItem>
-                        <SelectItem value="custom-solution">Custom Solution</SelectItem>
-                        <SelectItem value="emergency">Emergency Service</SelectItem>
-                        <SelectItem value="consultation">Technical Consultation</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="message">Project Details *</Label>
-                    <Textarea
-                      id="message"
-                      value={formData.message}
-                      onChange={(e) => handleInputChange("message", e.target.value)}
-                      required
-                      placeholder="Please describe your pumping requirements, application details, flow rates, pressures, and any specific challenges you're facing..."
-                      rows={4}
-                    />
-                  </div>
-
-                  <Button type="submit" variant="default" size="lg" className="w-full">
-                    <Send className="w-5 h-5 mr-2" />
-                    Submit Quote Request
+                  <Input placeholder="Subject" required />
+                  <Select required>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Reason for Inquiry" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="quote">Request a Quote</SelectItem>
+                      <SelectItem value="support">Technical Support</SelectItem>
+                      <SelectItem value="partnership">Partnership</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Textarea placeholder="Your Message" rows={6} required />
+                  <Button type="submit" size="lg" className="w-full btn-primary">
+                    Send Message <Send className="ml-2 h-5 w-5" />
                   </Button>
                 </form>
-              </CardContent>
-            </Card>
+              )}
+            </motion.div>
 
-            {/* Contact Information */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">Get in Touch</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {contactInfo.map((info, index) => (
-                    <Card key={index} className="border-0 shadow-lg">
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-3">
-                          {info.icon}
-                          <div>
-                            <h3 className="font-semibold text-foreground mb-2">{info.title}</h3>
-                            {info.details.map((detail, detailIndex) => (
-                              <p key={detailIndex} className="text-muted-foreground text-sm">
-                                {detail}
-                              </p>
-                            ))}
-                          </div>
+            {/* Contact Details */}
+            <motion.div className="space-y-8" {...fadeIn} transition={{...fadeIn.transition, delay: 0.2}}>
+                {contactPoints.map(point => (
+                    <div key={point.title} className="flex items-start">
+                        <div className="flex-shrink-0 h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center">
+                            {point.icon}
                         </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        <div className="ml-6">
+                            <h3 className="text-2xl font-bold">{point.title}</h3>
+                            <p className="text-lg text-muted-foreground">{point.detail}</p>
+                        </div>
+                    </div>
+                ))}
+                <div className="pt-8">
+                    <h3 className="text-2xl font-bold mb-4">Our Headquarters</h3>
+                    <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
+                        <p className="text-muted-foreground">[Interactive Map Placeholder]</p>
+                    </div>
                 </div>
-              </div>
-
-              {/* Emergency Contact */}
-              <Card className="border-2 border-primary bg-accent">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-2">Emergency Service</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Pump failure? Need immediate assistance? Our emergency team is available 24/7.
-                  </p>
-                  <Button variant="default" size="lg" className="w-full">
-                    <Phone className="w-5 h-5 mr-2" />
-                    Call Emergency Hotline
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Office Locations */}
-      <section className="py-16 bg-accent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Our Locations
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Multiple service centers to better serve you across the region.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {offices.map((office, index) => (
-              <Card key={index} className="border-0 shadow-lg transition-shadow duration-300">
-                <CardHeader>
-                  <CardTitle className="text-xl text-foreground">{office.city}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex items-start">
-                      <MapPin className="w-4 h-4 text-primary mr-2 mt-1" />
-                      <p className="text-muted-foreground text-sm">{office.address}</p>
-                    </div>
-                    <div className="flex items-center">
-                      <Phone className="w-4 h-4 text-primary mr-2" />
-                      <p className="text-muted-foreground text-sm">{office.phone}</p>
-                    </div>
-                    <div className="flex items-center">
-                      <Mail className="w-4 h-4 text-primary mr-2" />
-                      <p className="text-muted-foreground text-sm">Manager: {office.manager}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Find Us</h2>
-            <p className="text-lg text-muted-foreground">Visit our Dallas headquarters for in-person consultations.</p>
-          </div>
-          
-          <div className="bg-accent rounded-lg p-8 text-center">
-            <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-foreground mb-2">Dallas Headquarters</h3>
-            <p className="text-muted-foreground mb-4">123 Industrial Blvd, Manufacturing District, Dallas, TX 75201</p>
-            <p className="text-sm text-muted-foreground mb-6">
-              Interactive map and directions available on our website. 
-              Visitor parking available on-site.
-            </p>
-            <Button variant="default" asChild>
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
-                Get Directions
-              </a>
-            </Button>
-          </div>
+      {/* FAQ Section */}
+      <section className="py-20 bg-card">
+        <div className="container-fluid mx-auto px-4">
+          <motion.h2 className="text-4xl font-bold text-center mb-12" {...fadeIn}>
+            Frequently Asked Questions
+          </motion.h2>
+          <motion.div className="max-w-3xl mx-auto" {...fadeIn}>
+            <Accordion type="single" collapsible className="w-full">
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-lg text-left">{item.question}</AccordionTrigger>
+                  <AccordionContent className="text-base text-muted-foreground">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </motion.div>
         </div>
       </section>
     </div>

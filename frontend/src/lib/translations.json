@@ -1,0 +1,50 @@
+{
+  "en": {
+    "header": {
+      "products": "Products",
+      "solutions": "Solutions",
+      "about": "About",
+      "blog": "Blog",
+      "support": "Support",
+      "contact": "Contact",
+      "requestQuote": "Request a Quote"
+    },
+    "home": {
+      "heroTitle": "Engineered for Excellence. Built for a Better Future.",
+      "heroSubtitle": "Discover the next generation of high-performance, sustainable pumping solutions.",
+      "exploreProducts": "Explore Our Products"
+    },
+    "footer": {
+      "about": "Leading the future of fluid management with innovative and sustainable pumping solutions.",
+      "quickLinks": "Quick Links",
+      "support": "Support",
+      "newsletter": "Stay Updated",
+      "subscribe": "Subscribe",
+      "allRightsReserved": "AquaPump. All rights reserved."
+    }
+  },
+  "he": {
+    "header": {
+      "products": "מוצרים",
+      "solutions": "פתרונות",
+      "about": "אודות",
+      "blog": "בלוג",
+      "support": "תמיכה",
+      "contact": "צור קשר",
+      "requestQuote": "בקש הצעת מחיר"
+    },
+    "home": {
+      "heroTitle": "הונדס למצוינות. נבנה לעתיד טוב יותר.",
+      "heroSubtitle": "גלה את הדור הבא של פתרונות שאיבה ברי-קיימא ובעלי ביצועים גבוהים.",
+      "exploreProducts": "גלה את המוצרים שלנו"
+    },
+    "footer": {
+      "about": "מובילים את עתיד ניהול הנוזלים עם פתרונות שאיבה חדשניים וברי-קיימא.",
+      "quickLinks": "קישורים מהירים",
+      "support": "תמיכה",
+      "newsletter": "הישאר מעודכן",
+      "subscribe": "הירשם",
+      "allRightsReserved": "אקווה-פאמפ. כל הזכויות שמורות."
+    }
+  }
+}
