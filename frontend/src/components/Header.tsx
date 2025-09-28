@@ -7,10 +7,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const navLinkKeys = [
   { key: "products", to: "/products" },
-  { key: "solutions", to: "/solutions" },
+  { key: "services", to: "/services" },
   { key: "about", to: "/about" },
   { key: "blog", to: "/blog" },
-  { key: "support", to: "/support" },
   { key: "contact", to: "/contact" },
 ];
 
