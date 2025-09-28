@@ -1,246 +1,153 @@
+import { motion } from "framer-motion";
+import { ArrowRight, Zap, Shield, Users, Award } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, Wrench, Shield, Clock, Award } from "lucide-react";
-import industrialHero from "@/assets/industrial-hero.jpg";
-import { useLanguage } from "@/contexts/LanguageContext";
+import ProductCarousel from "@/components/ProductCarousel";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
+
+const features = [
+    {
+      icon: <Zap className="w-10 h-10 text-primary" />,
+      title: "Unmatched Performance",
+      description: "Our pumps deliver industry-leading flow rates and efficiency, ensuring your operations run at peak capacity."
+    },
+    {
+      icon: <Shield className="w-10 h-10 text-primary" />,
+      title: "Built to Last",
+      description: "Constructed with high-grade, corrosion-resistant materials for maximum durability and lifespan."
+    },
+    {
+      icon: <Users className="w-10 h-10 text-primary" />,
+      title: "Expert Support",
+      description: "A dedicated team of engineers is available 24/7 to provide technical assistance and guidance."
+    },
+    {
+        icon: <Award className="w-10 h-10 text-primary" />,
+        title: "Certified Quality",
+        description: "All products are rigorously tested and certified to meet international standards for safety and quality."
+    }
+];
 
 const Home = () => {
-  const { t, isRTL } = useLanguage();
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
+    },
+  };
 
-  const features = [
-    {
-      icon: <Shield className="w-8 h-8 text-primary" />,
-      title: t('features.reliable.title'),
-      description: t('features.reliable.desc')
-    },
-    {
-      icon: <Wrench className="w-8 h-8 text-primary" />,
-      title: t('features.expert.title'),
-      description: t('features.expert.desc')
-    },
-    {
-      icon: <Clock className="w-8 h-8 text-primary" />,
-      title: t('features.support.title'),
-      description: t('features.support.desc')
-    },
-    {
-      icon: <Award className="w-8 h-8 text-primary" />,
-      title: t('features.certified.title'),
-      description: t('features.certified.desc')
-    }
-  ];
-
-  const productCategories = [
-    {
-      title: t('products.centrifugal.title'),
-      description: t('products.centrifugal.desc'),
-      features: [t('products.centrifugal.feature1'), t('products.centrifugal.feature2'), t('products.centrifugal.feature3')]
-    },
-    {
-      title: t('products.submersible.title'),
-      description: t('products.submersible.desc'),
-      features: [t('products.submersible.feature1'), t('products.submersible.feature2'), t('products.submersible.feature3')]
-    },
-    {
-      title: t('products.custom.title'),
-      description: t('products.custom.desc'),
-      features: [t('products.custom.feature1'), t('products.custom.feature2'), t('products.custom.feature3')]
-    }
-  ];
-
-  const industries = [
-    t('industries.manufacturing'),
-    t('industries.oilGas'),
-    t('industries.waterTreatment'),
-    t('industries.mining'),
-    t('industries.agriculture'),
-    t('industries.construction')
-  ];
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.6 } },
+  };
 
   return (
-    <div className={isRTL ? 'rtl' : 'ltr'}>
-      {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center transform transition-transform duration-1000 hover:scale-105"
-          style={{ backgroundImage: `url(${industrialHero})` }}
-          data-aos="fade-in"
+    <div className="overflow-x-hidden">
+      {/* Hero Section with Video Background */}
+      <section className="relative h-screen flex items-center justify-center text-white">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+          src="https://www.shutterstock.com/shutterstock/videos/1090590598/preview/stock-footage-water-pump-in-motion-at-station.mp4"
+        />
+        <div className="absolute top-0 left-0 w-full h-full bg-black/50 -z-10" />
+        <motion.div
+          className="text-center px-4"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <div className="absolute inset-0 gradient-hero"></div>
-        </div>
-        
-        <div className="relative z-10 text-center text-white max-w-5xl mx-auto responsive-padding" data-aos="fade-in">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance leading-tight" data-aos="fade-up">
-            {t('hero.title')}
-          </h1>
-          <p className="text-xl md:text-3xl mb-8 text-primary-foreground/90 font-medium" data-aos="fade-up" data-aos-delay="100">
-            {t('hero.subtitle')}
-          </p>
-          <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-primary-foreground/80 leading-relaxed text-pretty" data-aos="fade-up" data-aos-delay="200">
-            {t('hero.description')}
-          </p>
-          
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-            <Button variant="default" size="lg" className="btn-primary text-lg px-8 py-3 h-auto" asChild data-aos="fade-up" data-aos-delay="300">
-              <Link to="/contact">
-                {t('hero.requestQuote')}
-                <ArrowRight className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} />
+          <motion.h1
+            className="text-5xl md:text-7xl font-bold mb-4 text-balance"
+            variants={itemVariants}
+          >
+            Engineered for Excellence. <br /> Built for a Better Future.
+          </motion.h1>
+          <motion.p
+            className="text-xl md:text-2xl max-w-3xl mx-auto mb-8 text-white/90"
+            variants={itemVariants}
+          >
+            Discover the next generation of high-performance, sustainable pumping solutions.
+          </motion.p>
+          <motion.div variants={itemVariants}>
+            <Button size="lg" asChild className="btn-primary text-lg px-8 py-3 h-auto">
+              <Link to="/products">
+                Explore Our Products <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="secondary" size="lg" className="btn-secondary text-lg px-8 py-3 h-auto" asChild data-aos="fade-up" data-aos-delay="400">
-              <Link to="/products">{t('hero.viewProducts')}</Link>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Featured Products Section */}
+      <ProductCarousel />
+
+      {/* Why Choose Us Section */}
+      <section className="py-20 bg-card">
+        <div className="container-fluid mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold">Why Choose AquaPump?</h2>
+            <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
+              We provide more than just pumps; we deliver comprehensive, reliable fluid management solutions.
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                className="text-center p-6"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+              >
+                <div className="flex justify-center items-center h-20 w-20 rounded-full bg-primary/10 mx-auto mb-6">
+                    {feature.icon}
+                </div>
+                <h3 className="text-2xl font-bold mb-3">{feature.title}</h3>
+                <p className="text-muted-foreground">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <TestimonialsCarousel />
+
+       {/* CTA Section */}
+       <section className="py-24 bg-primary text-primary-foreground">
+        <motion.div
+          className="container-fluid mx-auto px-4 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Elevate Your Operations?</h2>
+          <p className="text-xl max-w-3xl mx-auto mb-8">
+            Let's discuss your project and find the perfect pumping solution for your needs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-3 h-auto">
+              <Link to="/contact">Request a Quote</Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild className="text-lg px-8 py-3 h-auto border-primary-foreground/50 hover:bg-white/10 hover:text-white">
+              <Link to="/about">Learn More About Us</Link>
             </Button>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-gradient-to-br from-background to-accent/30">
-        <div className="max-w-7xl mx-auto responsive-padding">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 text-balance">
-              {t('features.title')}
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-pretty">
-              {t('features.subtitle')}
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card
-                key={index}
-                className="text-center border-0 bg-white/80 backdrop-blur-sm hover:bg-white transition-all duration-500 group"
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-              >
-                <CardContent className="p-8">
-                  <div className="flex justify-center mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed text-pretty">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products Section */}
-      <section className="py-20 bg-accent/30">
-        <div className="max-w-7xl mx-auto responsive-padding">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 text-balance">
-              {t('products.title')}
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-pretty">
-              {t('products.subtitle')}
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {productCategories.map((category, index) => (
-              <Card
-                key={index}
-                className="h-full border-0 bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-500 group"
-                data-aos="fade-up"
-                data-aos-delay={index * 200}
-              >
-                <CardContent className="p-8">
-                  <h3 className="text-xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
-                    {category.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed text-pretty">
-                    {category.description}
-                  </p>
-                  
-                  <ul className="space-y-3 mb-8">
-                    {category.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className={`flex items-center text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
-                        <CheckCircle className={`w-4 h-4 text-primary ${isRTL ? 'ml-3' : 'mr-3'} flex-shrink-0`} />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <Button variant="default" className="w-full btn-primary group-hover:scale-105 transition-transform duration-300" asChild>
-                    <Link to="/products">{t('products.learnMore')}</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Industries Section */}
-      <section className="py-20 bg-gradient-to-br from-white to-accent/20">
-        <div className="max-w-7xl mx-auto responsive-padding text-center">
-          <div className="mb-16" data-aos="fade-up">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 text-balance">
-              {t('industries.title')}
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed text-pretty">
-              {t('industries.subtitle')}
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {industries.map((industry, index) => (
-              <div
-                key={index}
-                className="bg-white/80 backdrop-blur-sm text-foreground px-6 py-4 rounded-xl font-medium
-                          hover:bg-primary hover:text-white transform hover:-translate-y-1 hover:scale-105
-                          transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer
-                          border border-border/20"
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-              >
-                <span className="text-sm md:text-base">{industry}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 gradient-primary text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
-        <div className="relative z-10 max-w-5xl mx-auto responsive-padding text-center" data-aos="fade-in">
-          <div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-balance" data-aos="fade-up">
-              {t('cta.title')}
-            </h2>
-            <p className="text-xl md:text-2xl mb-10 text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed text-pretty" data-aos="fade-up" data-aos-delay="100">
-              {t('cta.subtitle')}
-            </p>
-            
-            <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-              <Button variant="secondary" size="lg" className="btn-secondary text-lg px-8 py-3 h-auto shadow-xl" asChild data-aos="fade-up" data-aos-delay="200">
-                <Link to="/contact">
-                  {t('cta.getFreeQuote')}
-                  <ArrowRight className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} />
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="glass-effect text-white hover:bg-white/20 border-white/30 text-lg px-8 py-3 h-auto"
-                asChild
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <Link to="/services">{t('cta.viewServices')}</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );

@@ -1,118 +1,90 @@
-import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
+  const quickLinks = [
+    { to: "/about", key: "about" },
+    { to: "/products", key: "products" },
+    { to: "/solutions", key: "solutions" },
+    { to: "/blog", key: "blog" },
+    { to: "/contact", key: "contact" },
+  ];
+
+  const supportLinks = [
+    { to: "/support/faq", text: "FAQ" }, // Assuming FAQ is universal
+    { to: "/support/documentation", text: "Documentation" },
+    { to: "support/service-centers", text: "Service Centers" },
+  ];
+
   return (
-    <footer className="bg-foreground text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">A</span>
-              </div>
-              <span className="text-xl font-bold">AquaPump</span>
-            </div>
+    <footer className="bg-card text-card-foreground py-16">
+      <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* About Section */}
+          <div className="lg:col-span-1">
+            <h3 className="text-2xl font-bold text-primary mb-4">AquaPump</h3>
             <p className="text-muted-foreground mb-4">
-              Leading provider of industrial pumping solutions with over 25 years of experience serving industries worldwide.
+              {t('footer.about')}
             </p>
-            <div className="space-y-2">
-              <div className="flex items-center text-sm">
-                <Phone className="w-4 h-4 mr-2 text-primary" />
-                <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center text-sm">
-                <Mail className="w-4 h-4 mr-2 text-primary" />
-                <span>info@aquapump.com</span>
-              </div>
+            <div className="flex space-x-4">
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Facebook size={24} />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Twitter size={24} />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Linkedin size={24} />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Instagram size={24} />
+              </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-muted-foreground hover:text-white transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="text-muted-foreground hover:text-white transition-colors">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-muted-foreground hover:text-white transition-colors">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-muted-foreground hover:text-white transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-muted-foreground hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
+            <h4 className="font-semibold text-lg mb-4">{t('footer.quickLinks')}</h4>
+            <ul className="space-y-3">
+              {quickLinks.map(link => (
+                <li key={link.key}>
+                  <NavLink to={link.to} className="text-muted-foreground hover:text-primary transition-colors">
+                    {t(`header.${link.key}`)}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Support */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Services</h3>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>Installation & Setup</li>
-              <li>Maintenance & Repair</li>
-              <li>Custom Solutions</li>
-              <li>Technical Support</li>
-              <li>Emergency Service</li>
+            <h4 className="font-semibold text-lg mb-4">{t('footer.support')}</h4>
+            <ul className="space-y-3">
+                {/* Note: These are not in translations.json, assuming they are proper nouns or universal */}
+              <li><NavLink to="/support/faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</NavLink></li>
+              <li><NavLink to="/support/documentation" className="text-muted-foreground hover:text-primary transition-colors">Documentation</NavLink></li>
+              <li><NavLink to="/support/service-centers" className="text-muted-foreground hover:text-primary transition-colors">Service Centers</NavLink></li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
-            <div className="space-y-3">
-              <div className="flex items-start">
-                <MapPin className="w-4 h-4 mr-2 text-primary mt-1" />
-                <div className="text-sm text-muted-foreground">
-                  <p>123 Industrial Blvd</p>
-                  <p>Manufacturing District</p>
-                  <p>Dallas, TX 75201</p>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <Clock className="w-4 h-4 mr-2 text-primary" />
-                <div className="text-sm text-muted-foreground">
-                  <p>Mon-Fri: 7:00 AM - 6:00 PM</p>
-                  <p>Emergency: 24/7 Available</p>
-                </div>
-              </div>
-            </div>
+            <h4 className="font-semibold text-lg mb-4">{t('footer.newsletter')}</h4>
+            <p className="text-muted-foreground mb-4">Subscribe to our newsletter for the latest news and offers.</p>
+            <form className="flex space-x-2">
+              <Input type="email" placeholder="Your Email" className="bg-background" />
+              <Button type="submit" className="btn-primary">{t('footer.subscribe')}</Button>
+            </form>
           </div>
         </div>
 
-        <div className="border-t border-muted-foreground mt-8 pt-8 text-center">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm">
-              © 2024 AquaPump Industries. All rights reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-muted-foreground hover:text-white text-sm transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-white text-sm transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-white text-sm transition-colors">
-                Cookie Policy
-              </a>
-            </div>
-          </div>
+        <div className="mt-16 pt-8 border-t border-border text-center text-muted-foreground">
+          <p>&copy; {new Date().getFullYear()} {t('footer.allRightsReserved')}</p>
         </div>
       </div>
     </footer>
