@@ -1,9 +1,9 @@
 FROM node:20-alpine AS builder
 
 WORKDIR /app
-COPY frontend/package*.json frontend/bun.lockb* ./
+COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install
-COPY frontend/. .
+COPY frontend/ ./
 RUN npm run build
 
 # Production stage
