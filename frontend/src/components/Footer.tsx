@@ -10,15 +10,9 @@ const Footer = () => {
   const quickLinks = [
     { to: "/about", key: "about" },
     { to: "/products", key: "products" },
-    { to: "/solutions", key: "solutions" },
+    { to: "/services", key: "services" },
     { to: "/blog", key: "blog" },
     { to: "/contact", key: "contact" },
-  ];
-
-  const supportLinks = [
-    { to: "/support/faq", text: "FAQ" }, // Assuming FAQ is universal
-    { to: "/support/documentation", text: "Documentation" },
-    { to: "support/service-centers", text: "Service Centers" },
   ];
 
   return (
@@ -61,19 +55,8 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4">{t('footer.support')}</h4>
-            <ul className="space-y-3">
-                {/* Note: These are not in translations.json, assuming they are proper nouns or universal */}
-              <li><NavLink to="/support/faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</NavLink></li>
-              <li><NavLink to="/support/documentation" className="text-muted-foreground hover:text-primary transition-colors">Documentation</NavLink></li>
-              <li><NavLink to="/support/service-centers" className="text-muted-foreground hover:text-primary transition-colors">Service Centers</NavLink></li>
-            </ul>
-          </div>
-
           {/* Newsletter */}
-          <div>
+          <div className="lg:col-span-2">
             <h4 className="font-semibold text-lg mb-4">{t('footer.newsletter')}</h4>
             <p className="text-muted-foreground mb-4">Subscribe to our newsletter for the latest news and offers.</p>
             <form className="flex space-x-2">
